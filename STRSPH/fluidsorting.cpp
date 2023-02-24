@@ -2,7 +2,9 @@
 
 int main(){
     fluidsort x;
-    x.levelparameter(1);
-    cout << x.Nbotlle << "\t" << x.Nemtybottle << "\t" << x.Nfluidtype ;
+    x.levelparameter(2);
+    cout << x.Nbottle << "\t" << x.Nemtybottle << "\t" << x.Nfluidtype << endl << endl ;
+    x.createbottle();
+    x.createstage();
     //test();
 }
