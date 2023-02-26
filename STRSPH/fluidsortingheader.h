@@ -60,10 +60,10 @@ void fluidsort::createandfillbottle(){
 
     random_shuffle(bottle.begin(),bottle.end());
 
-    for(int i=0;i<(Nbottle + Nemtybottle)*Nfluidtype;i+=1){
+    /*for(int i=0;i<(Nbottle + Nemtybottle)*Nfluidtype;i+=1){
         if(i !=0 && i%Nfluidtype==0){cout << endl;}
             cout << bottle[i] << "\t";
-    }
+    }*/
 }
 
 void fluidsort::vector22dvector(){
@@ -81,37 +81,50 @@ void fluidsort::vector22dvector(){
         }
     }
 
-    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+    /*for(int i=0;i<Nbottle + Nemtybottle;i+=1){
         for(int j=0;j<Nfluidtype;j+=1){
             cout << bottle2dvector[i][j] << "\t" ;
         }
-        cout << endl;
-    }
+        cout << endl << endl;
+    }*/
 }
 
 void fluidsort::gravity(){
     int temp;
-    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
-        for(int j=0;j<Nfluidtype-1;j+=1){
-            if(bottle2dvector[i][j] == 0){
-                bottle2dvector[i][j] = bottle2dvector[i][j+1];
-                bottle2dvector[i][j+1] = 0;
+    for(int k=0;k<Nfluidtype-1;k+=1){
+        for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+            for(int j=0;j<Nfluidtype-1;j+=1){
+                if(bottle2dvector[i][j] == 0){
+                    bottle2dvector[i][j] = bottle2dvector[i][j+1];
+                    bottle2dvector[i][j+1] = 0;
+                }
             }
         }
     }
 
-    cout << endl << endl ;
-    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+    /*for(int i=0;i<Nbottle + Nemtybottle;i+=1){
         for(int j=0;j<Nfluidtype;j+=1){
             cout << bottle2dvector[i][j] << "\t" ;
         }
         cout << endl;
-    }
+    }*/
 }
 
 void fluidsort::createstage(){
-    
-    cout<< " ";
+    cout << endl << endl;
+    for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+        cout << "\t" << "-=-" ;
+    }
+    cout << endl;
+    for(int i =Nfluidtype-1;i>=0;i-=1){
+        for(int j=0;j<Nbottle + Nemtybottle;j+=1){
+            cout << "\t" <<"|"<< bottle2dvector[j][i]<<"|" ;
+        }
+        cout << endl;
+    }
+    for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+        cout << "\t" << "===" ;
+    }
 }
 
 void test(int lvl){
@@ -120,11 +133,12 @@ void test(int lvl){
     srand(time(0));
     fluidsort game;
     game.levelparameter(lvl);
-    cout << game.Nbottle << " + " << game.Nemtybottle << "\t" << game.Nfluidtype << endl << endl ;
+    //cout << game.Nbottle << " + " << game.Nemtybottle << "\t" << game.Nfluidtype << endl << endl ;
     game.createandfillbottle();
-    cout << endl<<endl;
+    //cout << endl<<endl;
     game.vector22dvector();
     game.gravity();
+    game.createstage();
 }
 
 
