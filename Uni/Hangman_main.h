@@ -162,10 +162,12 @@ void HangManPlay(int lv){
 			SetConsoleTextAttribute(Text_Color,15);
 		
 		if( found == wordLength ){
+			SetConsoleTextAttribute(Text_Color,1);
 			cout << endl;
 			cout << "*****************" << endl;
 			cout << "*    You Win    *" << endl;
-			cout << "*****************" << endl;
+			cout << "*  Bro So Good  *" << endl;
+			cout << "*****************" << endl << endl;
 			break;
 		}
 		
@@ -193,11 +195,16 @@ void HangManPlay(int lv){
 
 	if( found != wordLength ){
 
+		SetConsoleTextAttribute(Text_Color,4);
 		cout << endl;
 		cout << "******************" << endl;
 		cout << "*    You Lose    *" << endl;
-		cout << "******************" << endl;
+		cout << "* GGEZ Noob Shit *" << endl;
+		cout << "******************" << endl << endl;
 	}
+
+	SetConsoleTextAttribute(Text_Color,15);
+	cout << "Answer : " << word;
 	
 	getch();
 }
