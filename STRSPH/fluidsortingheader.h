@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <windows.h>
+#include <windows.h> //system cls
 #include <iomanip>
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <algorithm> //shuffle
 
 using namespace std ;
 
@@ -19,8 +19,9 @@ class fluidsort{
 
     void levelparameter(int); //get Nbottle,Nemtybottle,Nfluidtype form input(lvl of stage)
     void createandfillbottle(); //create array (row = Nbottle , col = Nfluditype) and fillbottle randomly
+    void vector22dvector(); //converse to 2D vector
+    void gravity(); //put 0 to the end
     void createstage();
-    void vector22dvector();
 };
 
 void fluidsort::levelparameter(int stagelvl){
@@ -88,13 +89,34 @@ void fluidsort::vector22dvector(){
     }
 }
 
+void fluidsort::gravity(){
+    int temp;
+    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+        for(int j=0;j<Nfluidtype-1;j+=1){
+            if(bottle2dvector[i][j] == 0){
+                bottle2dvector[i][j] = bottle2dvector[i][j+1];
+                bottle2dvector[i][j+1] = 0;
+            }
+        }
+    }
+
+    cout << endl << endl ;
+    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+        for(int j=0;j<Nfluidtype;j+=1){
+            cout << bottle2dvector[i][j] << "\t" ;
+        }
+        cout << endl;
+    }
+}
+
 void fluidsort::createstage(){
-     //Sleep(1000); //Delay (ms)
-    //system("cls"); //Screenclear
+    
     cout<< " ";
 }
 
 void test(int lvl){
+    //Sleep(1000); //Delay (ms)
+    //system("cls"); //Screenclear
     srand(time(0));
     fluidsort game;
     game.levelparameter(lvl);
@@ -102,6 +124,8 @@ void test(int lvl){
     game.createandfillbottle();
     cout << endl<<endl;
     game.vector22dvector();
+    game.gravity();
+
 }
 
 
