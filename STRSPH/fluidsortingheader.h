@@ -125,7 +125,6 @@ void test(int lvl){
     cout << endl<<endl;
     game.vector22dvector();
     game.gravity();
-
 }
 
 
