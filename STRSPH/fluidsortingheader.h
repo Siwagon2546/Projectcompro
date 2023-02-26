@@ -21,7 +21,8 @@ class fluidsort{
     void createandfillbottle(); //create array (row = Nbottle , col = Nfluditype) and fillbottle randomly
     void vector22dvector(); //converse to 2D vector
     void gravity(); //put 0 to the end
-    void createstage();
+    void showstage();
+    void tranfer();
 };
 
 void fluidsort::levelparameter(int stagelvl){
@@ -110,7 +111,7 @@ void fluidsort::gravity(){
     }*/
 }
 
-void fluidsort::createstage(){
+void fluidsort::showstage(){
     cout << endl << endl;
     for(int i=0;i<Nbottle+Nemtybottle;i+=1){
         cout << "\t" << "-=-" ;
@@ -138,7 +139,7 @@ void test(int lvl){
     //cout << endl<<endl;
     game.vector22dvector();
     game.gravity();
-    game.createstage();
+    game.showstage();
 }
 
 
