@@ -164,10 +164,10 @@ void HangManPlay(int lv){
 		if( found == wordLength ){
 			SetConsoleTextAttribute(Text_Color,1);
 			cout << endl;
-			cout << "*****************" << endl;
-			cout << "*    You Win    *" << endl;
-			cout << "*  Bro So Good  *" << endl;
-			cout << "*****************" << endl << endl;
+			cout << "******************" << endl;
+			cout << "*     You Win    *" << endl;
+			cout << "* Bro So Good XD *" << endl;
+			cout << "******************" << endl << endl;
 			break;
 		}
 		
