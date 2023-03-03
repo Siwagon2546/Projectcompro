@@ -103,12 +103,12 @@ void fluidsort::gravity(){
         }
     }
 
-    /*for(int i=0;i<Nbottle + Nemtybottle;i+=1){
+    for(int i=0;i<Nbottle + Nemtybottle;i+=1){
         for(int j=0;j<Nfluidtype;j+=1){
             cout << bottle2dvector[i][j] << "\t" ;
         }
         cout << endl;
-    }*/
+    }
 }
 
 void fluidsort::showstage(){
@@ -126,6 +126,41 @@ void fluidsort::showstage(){
     for(int i=0;i<Nbottle+Nemtybottle;i+=1){
         cout << "\t" << "===" ;
     }
+    cout << endl << endl ;
+}
+
+void fluidsort::tranfer(){ //showstage + tranfer
+    int select,destination;
+    
+    do{
+        system("cls");
+        showstage();
+        for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+            cout << "\t"<< "[" << i+1 << "]"; //print selected
+        }
+        cout << endl << endl << "Tranfer" << " [SELECT :"; //select
+        for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+            cout << " " << i+1 ;
+        }
+        cout << "]";
+        cin >> select;
+    }while(select <= 0 || select > Nbottle+Nemtybottle );
+
+    do{
+        system("cls");
+        showstage();
+        for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+            cout << "\t"<< "[" << i+1 << "]"; //print selected
+        }
+        cout << endl << endl << "Tranfer " << select << " to " << "[SELECT :";
+        for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+            if(i!=select-1){cout << " "<< i+1;}
+        }
+        cout << "]";
+        cin >> destination;
+    }while(destination <=0 || destination > Nbottle+Nemtybottle || destination ==select);
+    
+    select-=1;
 }
 
 void test(int lvl){
@@ -136,10 +171,10 @@ void test(int lvl){
     game.levelparameter(lvl);
     //cout << game.Nbottle << " + " << game.Nemtybottle << "\t" << game.Nfluidtype << endl << endl ;
     game.createandfillbottle();
-    //cout << endl<<endl;
     game.vector22dvector();
     game.gravity();
-    game.showstage();
+    game.tranfer();
+    
 }
 
 
