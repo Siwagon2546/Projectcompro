@@ -3,6 +3,7 @@
 #include<vector>
 #include<windows.h>
 #include<ctime>
+#include<list>
 
 using namespace std;
 void snakecreate(int num){
@@ -51,8 +52,36 @@ vector<vector<char>> rectangle(height, vector<char>(width, ' '));
     
 }
 
-//void controllsnake(){
-    /*
+class Snake {
+public:
+    enum Face { RIGHT = 1, UP = 2, LEFT = 3, DOWN = 4 }; // 4 directions
+    int max_x, max_y, is_alive;
+    Face face;
+    list<int> cells;
+    Snake() { is_alive = 1; }
+    Snake(int w, int h): max_x(w), max_y(h) { is_alive = 1; }
+    bool having(int a_cell) {
+        return this->cells.end() != find(cells.begin(), cells.end(), a_cell);
+    }
+    void set_face(Face f) { if (2 != abs(face - f)) { face = f; } }
+    int head() { return this->cells.back(); }
+    int next_head() {
+        int x = this->head() % max_x, y = this->head() / max_x;
+        switch (this->face) { // caculate new head on current face direction
+            case RIGHT:  x = max_x-1 <= x ? 0 : x+1; break;
+            case LEFT:  x = x <= 0 ? max_x-1 : x-1; break;
+            case UP: y = y <= 0 ? max_y-1 : y-1; break;
+            case DOWN: y = max_y-1 <= y ? 0 : y+1; break;
+            default: break;
+        }
+        return y * max_x + x;
+    }
+};
+class controllsnake{
+    list<int> field, blanks;
+    Snake snake;
+    int score, food_cell, max_delay_ms;
+    void get_input() {    
     unsigned int waited_MS=0 , input_wait_MS=10;
     do{
         if(_kbhit()){
@@ -63,8 +92,11 @@ vector<vector<char>> rectangle(height, vector<char>(width, ' '));
                 case '77' : snake.set_face(Snake::RIGHT); break;
             }
         }
+            waited_MS += input_wait_MS;
+            Sleep(input_wait_MS); // wait for next keyboard hit
+    }while (max_delay_ms > waited_MS);
     }
-}*/
+};
 /*void sumfruit(){
 
 }
