@@ -17,7 +17,7 @@ int main()
     cout << k << " I want to be nice today!" << endl;
     SetConsoleTextAttribute(hConsole, 16);
   }
-  SetConsoleTextAttribute(hConsole, 15);
-    cout << " " << endl;
+  
+  cout << SetConsoleTextAttribute(hConsole, 64) << " " <<  SetConsoleTextAttribute(hConsole, 15) << endl;
   return 0;
 }

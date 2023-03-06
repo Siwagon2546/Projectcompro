@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <algorithm> //shuffle
+#include <conio.h>
 
 using namespace std ;
 
@@ -123,6 +124,7 @@ void fluidsort::gravity(){
 }
 
 void fluidsort::showstage(){
+    system("cls");
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 15);
@@ -152,8 +154,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 15);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -161,8 +163,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 144);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -170,8 +172,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 160);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -179,8 +181,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 192);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -188,8 +190,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 208);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -197,8 +199,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 240);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -206,8 +208,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 96);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -215,8 +217,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 48);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -224,8 +226,8 @@ void fluidsort::showstage(){
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
                     SetConsoleTextAttribute(hConsole, 8);
-                    //cout << "  ";
-                    cout << " " << bottle2dvector[j][i] << " ";
+                    cout << "  ";
+                    //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
                     cout <<"|";
                     break;
@@ -245,26 +247,72 @@ void fluidsort::showselect(){ //showstage + tranfer
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     do{
         system("cls");
-        for(int i=0;i<6;i+=1){
+        /*for(int i=0;i<6;i+=1){
             cout << sorted[i];
-        }
+        }*/
         showstage();
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){
-            cout << "\t"<< "[" << i+1 << "] "; //print selected
+            if(sorted[i]==true){
+                SetConsoleTextAttribute(hConsole, 0);
+                cout << "\t"<< "[" << i+1 << "]";
+                SetConsoleTextAttribute(hConsole, 15);
+            }else cout << "\t"<< "[" << i+1 << "] "; //print selected
         }
         cout << endl << endl << "Tranfer" << " [SELECT :"; //select
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){
-            cout << " " << i+1 ;
+            if(sorted[i]!=true){
+            cout << " " << i+1 ;}
         }
         cout << "]";
-        cin >> select;
+        select = getch();
+        switch(select){
+            case 48:
+                select = 0;
+                break;
+            case 49:
+                select = 1;
+                break;
+            case 50:
+                select = 2;
+                break;
+            case 51:
+                select = 3;
+                break;
+            case 52:
+                select = 4;
+                break;
+            case 53:
+                select = 5;
+                break;
+            case 54:
+                select = 6;
+                break;
+            case 55:
+                select = 7;
+                break;
+            case 56:
+                select = 8;
+                break;
+            case 57:
+                select = 9;
+                break;
+            case 27:
+                system("cls");
+                cout << endl << endl <<"\tEXIT" ;
+                Sleep(1500);
+                system("cls");
+                exit(0);
+                break;
+            default:
+                break;
+        }
     }while((select <= 0 || select > Nbottle+Nemtybottle) || (sorted[select-1]==true) );
 
     do{
         system("cls");
-        for(int i=0;i<6;i+=1){
+        /*for(int i=0;i<6;i+=1){
             cout << sorted[i];
-        }
+        }*/
         showstage();
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){ //print selected
             //cout << "\t"<< "[" << i+1 << "]"; 
@@ -272,14 +320,59 @@ void fluidsort::showselect(){ //showstage + tranfer
                 SetConsoleTextAttribute(hConsole, 10);
                 cout << "\t"<< "[" << i+1 << "]";
                 SetConsoleTextAttribute(hConsole, 15);
+            }else if(sorted[i]==true){
+                SetConsoleTextAttribute(hConsole, 0);
+                cout << "\t"<< "[" << i+1 << "]";
+                SetConsoleTextAttribute(hConsole, 15);
             }else cout << "\t"<< "[" << i+1 << "]"; 
         }
         cout << endl << endl << "Tranfer " << select << " to " << "[SELECT :";
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){
-            if(i!=select-1){cout << " "<< i+1;}
+            if(i!=select-1 && sorted[i]!=true){cout << " "<< i+1;}
         }
         cout << "]";
-        cin >> destination;
+        destination = getch();
+        switch(destination){
+            case 48:
+                destination = 0;
+                break;
+            case 49:
+                destination = 1;
+                break;
+            case 50:
+                destination = 2;
+                break;
+            case 51:
+                destination = 3;
+                break;
+            case 52:
+                destination = 4;
+                break;
+            case 53:
+                destination = 5;
+                break;
+            case 54:
+                destination = 6;
+                break;
+            case 55:
+                destination = 7;
+                break;
+            case 56:
+                destination = 8;
+                break;
+            case 57:
+                destination = 9;
+                break;
+            case 27:
+                system("cls");
+                cout << endl << endl <<"\tEXIT" ;
+                Sleep(1500);
+                system("cls");
+                exit(0);
+                break;
+            default:
+                break;
+        }
     }while((destination <=0 || destination > Nbottle+Nemtybottle || destination ==select) || (sorted[select-1]==true));
     
     select-=1;
@@ -330,10 +423,19 @@ void fluidsort::sortcheck(){
 }
 
 void fluidsort::wincheck(){
-    
+    int count=0;
+    for(int i=0;i<Nbottle+Nemtybottle;i+=1){
+        if(sorted[i]==true){
+            count +=1;
+            //cout << "count " << count;
+        }
+        if(count >= Nbottle){
+            win = true;
+        }
+    }
 }
 
-void test(int lvl){
+int playFluidsort(int lvl){
     //Sleep(1000); //Delay (ms)
     //system("cls"); //Screenclear
     srand(time(0));
@@ -349,13 +451,12 @@ void test(int lvl){
         game.showselect();
         game.tranfer();
         game.sortcheck();
-        //game.wincheck();
+        game.wincheck();
     }
+    game.showstage();
+    cout << "\tYou WON";
+    Sleep(1500);
+    system("cls");
+    return 1;
 }
-
-//wincheck
-//sorted =1   --->  select gone
-//move 2 to 1  disable
-//gecht()
-//exit
 
