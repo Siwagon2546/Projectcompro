@@ -1,5 +1,5 @@
 #include "fluidsortingHeader.h"
 
 int main(){
-    playFluidsort(3);        
+    playFluidsort(12);        
 }

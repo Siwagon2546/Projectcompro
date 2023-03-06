@@ -33,28 +33,69 @@ class fluidsort{
     void wincheck();
 };
 
-void fluidsort::levelparameter(int stagelvl){
+void fluidsort::levelparameter(int stagelvl){ //Nbottle + Nemtybott <= 12   //type = 4 --> emty = 2   type5 -> emty = 3
     switch(stagelvl){
         case 1 :
-            Nbottle = 2;
-            Nemtybottle = 1;
-            Nfluidtype = 2 ;
+            Nbottle = 3;
+            Nemtybottle = 2;
+            Nfluidtype = 3;
             break;
         case 2 :
-            Nbottle = 3;
+            Nbottle = 4;
             Nemtybottle = 2;
             Nfluidtype = 3 ;
             break;
         case 3 :
             Nbottle = 4;
             Nemtybottle = 2;
-            Nfluidtype = 3 ;
+            Nfluidtype = 4 ;
             break;
         case 4 :
-            Nbottle = 4;
+            Nbottle = 5;
             Nemtybottle = 2;
             Nfluidtype = 4 ;
             break;
+        case 5 :
+            Nbottle = 4;
+            Nemtybottle = 2;
+            Nfluidtype = 5 ;
+            break;
+        case 6 :
+            Nbottle = 5;
+            Nemtybottle = 2;
+            Nfluidtype = 5 ;
+            break;
+        case 7 :
+            Nbottle = 6;
+            Nemtybottle = 2;
+            Nfluidtype = 4 ;
+            break;
+        case 8 :
+            Nbottle = 7;
+            Nemtybottle = 2;
+            Nfluidtype = 4 ;
+            break;
+        case 9 :
+            Nbottle = 8;
+            Nemtybottle = 2;
+            Nfluidtype = 4 ;
+            break;
+        case 10 :
+            Nbottle = 5;
+            Nemtybottle = 3;
+            Nfluidtype = 5 ;
+            break;
+        case 11 :
+            Nbottle = 6;
+            Nemtybottle = 3;
+            Nfluidtype = 5 ;
+            break;
+        case 12 :
+            Nbottle = 7;
+            Nemtybottle = 3;
+            Nfluidtype = 5 ;
+            break;
+            
     }
 }
 
@@ -225,7 +266,7 @@ void fluidsort::showstage(){
                 case 8:
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
-                    SetConsoleTextAttribute(hConsole, 8);
+                    SetConsoleTextAttribute(hConsole, 128);
                     cout << "  ";
                     //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
@@ -261,13 +302,22 @@ void fluidsort::showselect(){ //showstage + tranfer
         cout << endl << endl << "Tranfer" << " [SELECT :"; //select
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){
             if(sorted[i]!=true){
-            cout << " " << i+1 ;}
+                if(i<10-1){
+                    cout << " " << i+1 ;
+                }else if(i==9){
+                    cout << " 0";
+                }else if(i==10){
+                    cout << " -";
+                }else if(i==11){
+                    cout << " =";
+                }
+            }
         }
         cout << "]";
         select = getch();
         switch(select){
             case 48:
-                select = 0;
+                select = 10;
                 break;
             case 49:
                 select = 1;
@@ -295,6 +345,12 @@ void fluidsort::showselect(){ //showstage + tranfer
                 break;
             case 57:
                 select = 9;
+                break;
+            case 45:
+                select = 11;
+                break;
+            case 61:
+                select = 12;
                 break;
             case 27:
                 system("cls");
@@ -328,13 +384,23 @@ void fluidsort::showselect(){ //showstage + tranfer
         }
         cout << endl << endl << "Tranfer " << select << " to " << "[SELECT :";
         for(int i=0;i<Nbottle+Nemtybottle;i+=1){
-            if(i!=select-1 && sorted[i]!=true){cout << " "<< i+1;}
+            if(i!=select-1 && sorted[i]!=true){
+                if(i<10-1){
+                    cout << " " << i+1 ;
+                }else if(i==9){
+                    cout << " " << "0";
+                }else if(i==10){
+                    cout << " -";
+                }else if(i==11){
+                    cout << " =";
+                }
+            }
         }
         cout << "]";
         destination = getch();
         switch(destination){
             case 48:
-                destination = 0;
+                destination = 10;
                 break;
             case 49:
                 destination = 1;
@@ -362,6 +428,12 @@ void fluidsort::showselect(){ //showstage + tranfer
                 break;
             case 57:
                 destination = 9;
+                break;
+            case 45:
+                destination = 11;
+                break;
+            case 61:
+                destination = 12;
                 break;
             case 27:
                 system("cls");
@@ -416,7 +488,7 @@ void fluidsort::sortcheck(){
         for(int j=0;j<Nfluidtype;j+=1){
             sum+=bottle2dvector[i][j];
         }
-        if(((sum/Nfluidtype)==bottle2dvector[i][0]) && bottle2dvector[i][Nfluidtype-1]!=0){
+        if(((sum/Nfluidtype)==bottle2dvector[i][0]) && bottle2dvector[i][Nfluidtype-1]!=0 && bottle2dvector[i][Nfluidtype-1]==bottle2dvector[i][0]){
             sorted[i]=true;
         }else sorted[i]=false;
     }
