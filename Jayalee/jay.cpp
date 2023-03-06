@@ -5,7 +5,6 @@
 #include<ctime>
 #include<list>
 #include<algorithm>
-
 using namespace std;
 void snakecreate(){
     int width = 40;
