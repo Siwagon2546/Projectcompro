@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <random>
 
-
 using namespace std;
 
 class maze{
