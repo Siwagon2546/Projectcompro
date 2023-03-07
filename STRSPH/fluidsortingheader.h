@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <windows.h> //system cls //color
+#include <windows.h> //sleep //color
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -15,9 +15,10 @@ class fluidsort{
     int Nbottle;
     int Nemtybottle;
     int Nfluidtype;
-    int select;
-    int destination;
+    int select=1;
+    int destination=1;
     bool win=false;
+    bool EXIT = false;
     vector<int> bottle;
     vector<vector<int>> bottle2dvector;
     vector<bool> sorted;
@@ -357,15 +358,17 @@ void fluidsort::showselect(){ //showstage + tranfer
                 cout << endl << endl <<"\tEXIT" ;
                 Sleep(1500);
                 system("cls");
-                exit(0);
+                EXIT = true;
                 break;
             default:
                 break;
         }
-    }while((select <= 0 || select > Nbottle+Nemtybottle) || (sorted[select-1]==true) );
-
+        //if(EXIT==true){break;}
+    }while(((select <= 0 || select > Nbottle+Nemtybottle) || (sorted[select-1]==true)) && !EXIT);
+    if(EXIT !=true){   
     do{
         system("cls");
+        //if(EXIT==true){break;}
         /*for(int i=0;i<6;i+=1){
             cout << sorted[i];
         }*/
@@ -440,13 +443,14 @@ void fluidsort::showselect(){ //showstage + tranfer
                 cout << endl << endl <<"\tEXIT" ;
                 Sleep(1500);
                 system("cls");
-                exit(0);
+                EXIT = true;
                 break;
             default:
                 break;
         }
-    }while((destination <=0 || destination > Nbottle+Nemtybottle || destination ==select) || (sorted[select-1]==true));
-    
+        //if(EXIT==true){break;}
+    }while(((destination <=0 || destination > Nbottle+Nemtybottle || destination ==select) || (sorted[select-1]==true)) && !EXIT);
+    }
     select-=1;
     destination-=1;
     //cout << select << destination;
@@ -454,7 +458,7 @@ void fluidsort::showselect(){ //showstage + tranfer
 
 void fluidsort::tranfer(){
     int posselect,colorselect,posdest,colordest;
-
+    if(EXIT !=true){
     for(int k=0;k<Nfluidtype;k+=1){
         for(int i=Nfluidtype-1;i>=0;i-=1){
             if(bottle2dvector[select][i]!=0){
@@ -479,7 +483,7 @@ void fluidsort::tranfer(){
             bottle2dvector[select][posselect] = 0;
         }
         gravity();
-    }
+    }}
 }
 
 void fluidsort::sortcheck(){
@@ -519,16 +523,19 @@ int playFluidsort(int lvl){
     game.gravity();
     //game.showselect();
     //cout << game.select << game.destination;
-    while(!game.win){
+    while(!game.win  && !game.EXIT){
+        
         game.showselect();
         game.tranfer();
         game.sortcheck();
         game.wincheck();
     }
+    if(!game.EXIT){
     game.showstage();
     cout << "\tYou WON";
     Sleep(1500);
     system("cls");
     return 1;
+    }else return 0;
 }
 
