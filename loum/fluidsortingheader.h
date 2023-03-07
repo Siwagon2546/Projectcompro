@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <windows.h> //sleep //color
+#include <windows.h> //system cls //color
 #include <iomanip>
 #include <string>
 #include <vector>
