@@ -126,7 +126,12 @@ void Draw(int num,int rand_num){
         
     
     system("cls");
-}  
+}
+
+void snakeEat(){
+    
+}
+
 void Input(){
 
     if (_kbhit())
