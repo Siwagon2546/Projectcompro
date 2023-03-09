@@ -8,117 +8,131 @@
 
 using namespace std;
 
-const int width = 20;
+const int width = 40;
 const int height = 20;
 
-int locationX, locationY;
-int score;
+int locationX=1, locationY=1;
+//int score;
 bool gameOver;
-int NumberX[5]={};
-int NumberY[5]={};
+int NumberX[6]={};
+int NumberY[6]={};
+int k=0;
+int number[6] = {};
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
 
 vector<int> nums;
-
 void GenerateLocation(){
-    locationX = rand() % width;
-    locationY = rand() % height;    
-    for(int i=0;i<1;i++){
-        NumberX[i] = rand()%5+1;
-        NumberY[i] = rand()%3+1;
+    srand(time(0));
+    int key=0,j=0; 
+        for(int i=0;i<6;i++){
+        NumberX[i] = rand()%(width-2)+2; 
+        NumberY[i] = rand()%(height-1)+1;
+        for(int j=0;j<i;j++){
+            if(NumberX[i]==NumberX[j]||NumberY[i]==NumberY[j]){
+                i--;
+            }
+        }
     }
-    for(int i=1;i<2;i++){
-        NumberX[i] = rand()%5+6;
-        NumberY[i] = rand()%3+4;
+    for(int i=0;i<sizeof(NumberY) / sizeof(int);i++){
+        key=NumberY[i];
+        j=i-1;
+    while(j>=0 && NumberY[j]>key){
+        NumberY[j+1]=NumberY[j];
+        j-=1;
     }
-    for(int i=2;i<3;i++){
-        NumberX[i] = rand()%5+11;
-        NumberY[i] = rand()%3+7;
+    NumberY[j+1]=key;
     }
-    for(int i=3;i<4;i++){
-        NumberX[i] = rand()%5+16;
-        NumberY[i] = rand()%3+10;
-    }
-    for(int i=4;i<5;i++){
-        NumberX[i] = rand()%5+21;
-        NumberY[i] = rand()%3+13;
-    }
-    for(int i=5;i<6;i++){
-        NumberX[i] = rand()%5+26;
-        NumberY[i] = rand()%3+16;
-    }
+/*         for(int j=0;j<6;j++){
+        cout<<"X"<<NumberX[j]<<endl;
+        cout<<"Y"<<NumberY[j]<<endl;
+    } */
 }
 
-void Setup(){
-    srand(time(NULL));
-    gameOver = false;
-    dir = STOP;
-    score = 0;
-    GenerateLocation();
-}
-
-void Draw(int num,int rand_num){
-    // Create a vector of integers
-    vector<int> number = {1, 2, 3};
-
-
+void rand_number(int num){
+    srand(time(0));
+    int key=0,j=0;
+        for(int i=0;i<3;i++){
+        number[i] = rand()%6; 
+        for(int j=0;j<i;j++){
+            if(number[i]==number[j]){
+                i--;
+            }
+        }
+    }
+    for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
+        key=number[i];
+        j=i-1;
+    while(j>=0 && number[j]>key){
+        number[j+1]=number[j];
+        j-=1;
+    }
+    number[j+1]=key;
+    }
     number[3]=num-number[0];
     number[4]=num-number[1];
     number[5]=num-number[2];
 
+}
+
+void Setup(){
+    int num;
+    srand(time(NULL));
+    gameOver = false;
+    dir = STOP;
+    GenerateLocation();
+   // rand_number(num);
+}
+
+void Draw(int num,int rand_num){
+
     cout << "            SMART Snake Game   \n";
     cout << "               Number is " <<    num   << "\n";
-    cout << "     ^ UP , v DOWN , < LEFT , > RIGHT";
-    system("cls");
-    for (int i = 0; i < width*2+2; i++)
-        cout << "_";
-        cout << endl;
-    
-    for (int i = 0; i < height; i++){
-        for (int j = 0; j < width; j++){
-            if (j == 0){
-                cout << "|";
+    cout << "^ UP , v down , < LEFT , > RIGHT ,  x EXIT\n";
+    GenerateLocation();
+    rand_number(num);
+    for(int i=0;i<height;i++){
+        for(int j=0;j<width;j++){
+            if(i==0||i==height-1){
+                cout<<"_";
+            }else if(j==0||j==width-1){
+                cout<<"|";
+            }else if(i == locationY && j == locationX){
+                cout << "#"; 
+            }else{
+             if(j == NumberX[k]&&i== NumberY[k]){
+                    cout << number[k];
+                    k++;
+                }else{ 
+                    cout << " ";
+                }
             }
             
-            for(int k=0;k<6;k++){
-            if (i == NumberY[k] && j == NumberX[k])
-                cout << number[k];
-            }    
-            
-                
-            if (i == locationY && j == locationX){
-                cout << "#";
-            }else{cout << " ";}    
-               
-            
             bool foundNum = false;
-            for (int k = 0; k < nums.size(); k++){
-                if (nums[k] == score && !foundNum){
-                    cout << score;
+            for (int k = 0; k < nums.size(); k++)
+            {
+                if (!foundNum)
+                {
+
                     foundNum = true;
                 }
             }
-            if (!foundNum)
-                cout << " ";
-
-            if (j == width - 1)
-                cout << "|";
+            if (!foundNum){}
+ 
         }
         cout << endl;
-    }
+        }
+        
     
-
-    for (int i = 0; i < width*2+2; i++)
-    cout << "_";
-    cout << endl;
-
+    system("cls");
 }  
 void Input(){
 
-    if (_kbhit()){
-        switch (_getch()){
+    if (_kbhit())
+    {
+        switch (_getch())
+        {
         case 75 : dir = LEFT;
             break;
         case 77 : dir = RIGHT;
@@ -136,7 +150,8 @@ void Input(){
 }
 
 void Logic(){
-    switch (dir){
+    switch (dir)
+    {
     case LEFT : locationX--;
         break;
     case RIGHT : locationX++;
@@ -149,11 +164,13 @@ void Logic(){
 
     if (locationX < 0 || locationX >= width || locationY < 0 || locationY >= height)
         gameOver = true;
-    
+
     /*bool foundNum = false;
-    for (int k = 0; k < nums.size(); k++){
+    for (int k = 0; k < nums.size(); k++)
+    {
         if (nums[k] == score && !foundNum){
-            if (score == locationX + locationY){
+            if (score == locationX + locationY)
+            {
                 score++;
                 GenerateFruit();
             }
@@ -165,7 +182,8 @@ void Logic(){
 int main(){
     vector<int> number = {1, 2, 3};
     // Seed the random number generator with the current time
-    srand(time(nullptr)); 
+    srand(time(NULL));
+    //For random number
     int num = rand()%6+5;
     // Generate a random number between 0 and 5
     int rand_num = rand() % 6;
@@ -173,7 +191,8 @@ int main(){
     random_shuffle(number.begin(), number.end());
     while (!gameOver)
     {   
-
+        GenerateLocation();
+        rand_number(num);
         Draw(num,rand_num);
         Input();
         Logic();
