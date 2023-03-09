@@ -129,7 +129,7 @@ void Draw(int num,int rand_num){
 }
 
 void snakeEat(){
-    
+
 }
 
 void Input(){
