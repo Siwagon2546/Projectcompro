@@ -27,8 +27,8 @@ void GenerateLocation(){
     srand(time(0));
     int key=0,j=0; 
         for(int i=0;i<6;i++){
-        NumberX[i] = rand()%(width-2)+2; 
-        NumberY[i] = rand()%(height-1)+1;
+        NumberX[i] = rand()%(width-2)+1; 
+        NumberY[i] = rand()%(height-2)+1;
         for(int j=0;j<i;j++){
             if(NumberX[i]==NumberX[j]||NumberY[i]==NumberY[j]){
                 i--;
@@ -86,7 +86,7 @@ void Setup(){
 }
 
 void Draw(int num){
-
+    system("cls");
     cout << "             SMART Snake Game   \n";
     cout << "                Number is " <<    num   << "\n";
     cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
@@ -114,10 +114,6 @@ void Draw(int num){
                 }
             }
             
-            for(int i=0;i<height;i+=1){
-                cout << text[i]<<endl;
-            }
-
             bool foundNum = false;
             for (int k = 0; k < nums.size(); k++){
                 if (!foundNum){
@@ -127,8 +123,13 @@ void Draw(int num){
             //if (!foundNum){}
     
         }
-        cout << endl;
+        
         }
+
+    for(int i=0;i<height;i+=1){
+                cout << text[i]<<endl;
+            }
+    
         
     
     k=0;
@@ -165,13 +166,17 @@ void Input(){
 void Logic(){
     switch (dir)
     {
-    case LEFT : locationX--;
+    case LEFT : 
+        locationX--;
         break;
-    case RIGHT : locationX++;
+    case RIGHT : 
+        locationX++;
         break;
-    case UP : locationY--;
+    case UP : 
+        locationY--;
         break;
-    case DOWN : locationY++;
+    case DOWN : 
+        locationY++;
         break;
     }
 
@@ -205,13 +210,12 @@ int playsnake(){
 
         GenerateLocation();
         rand_number(num);        
-    //while (!gameOver){   
+    while (!gameOver){   
         Draw(num);
         Input();
         Logic();
-        //system("cls");
         Sleep(20);
-    //}
+    }
 
     return 1;
 }
