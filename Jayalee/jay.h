@@ -17,7 +17,9 @@ bool gameOver;
 int NumberX[6]={};
 int NumberY[6]={};
 int k=0;
-int number[6] = {};
+int w=0;
+int number[6]={};
+string numberic[6]={};
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -51,10 +53,11 @@ void GenerateLocation(){
 }
 
 void rand_number(int num){
+    //snakeEat();
     srand(time(0));
     int key=0,j=0;
-        for(int i=0;i<3;i++){
-        number[i] = rand()%6; 
+    for(int i=0;i<3;i++){
+        number[i] = rand()%5+1; 
         for(int j=0;j<i;j++){
             if(number[i]==number[j]){
                 i--;
@@ -76,6 +79,14 @@ void rand_number(int num){
 
 }
 
+void numberics(int num , string numberic[]){
+    rand_number(num);
+    for(int i=0;i<6;i++){
+        numberic[i] = to_string(number[i]);  
+    }
+
+}
+
 void Setup(){
     int num;
     srand(time(NULL));
@@ -90,7 +101,7 @@ void Draw(int num){
     cout << "             SMART Snake Game   \n";
     cout << "                Number is " <<    num   << "\n";
     cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
-
+numberics(num,numberic);
     string text[height] ;
     for(int i=0;i<height;i++){
         for(int j=0;j<width;j++){
@@ -106,7 +117,8 @@ void Draw(int num){
             }else{
              if(j == NumberX[k]&&i== NumberY[k]){
                     //cout << number[k];
-                    text[i]+= to_string(number[k]);
+                    //text[i]+= to_string(number[k]);
+                    text[i]+= numberic[k];
                     k++;
                 }else{ 
                     //cout << " ";
@@ -130,13 +142,7 @@ void Draw(int num){
                 cout << text[i]<<endl;
             }
     
-        
-    
-    k=0;
-}
-
-void snakeEat(){
-
+        k=0;
 }
 
 void Input(){
@@ -164,8 +170,7 @@ void Input(){
 }
 
 void Logic(){
-    switch (dir)
-    {
+    switch (dir){
     case LEFT : 
         locationX--;
         break;
@@ -182,6 +187,15 @@ void Logic(){
 
     if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height)
         gameOver = true;
+
+
+    for(int i=0;i<6;i++){
+        if(NumberY[w] == locationY && NumberX[w] == locationX){
+            numberic[w] = " ";
+           
+        }
+    }
+
 
     /*bool foundNum = false;
     for (int k = 0; k < nums.size(); k++)
@@ -209,12 +223,15 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        rand_number(num);        
-    while (!gameOver){   
+        numberics(num,numberic);
+
+    while (!gameOver){
+         
         Draw(num);
         Input();
         Logic();
         Sleep(20);
+    
     }
 
     return 1;
