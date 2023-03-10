@@ -14,12 +14,14 @@ const int height = 20;
 int locationX=1, locationY=1;
 //int score;
 bool gameOver;
-int NumberX[6]={};
-int NumberY[6]={};
+int NumberX[6];
+int NumberY[6];
 int k=0;
 int w=0;
-int number[6]={};
-string numberic[6]={};
+int number[6];
+//string numberic[6]={};
+int a[2];
+
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -53,7 +55,7 @@ void GenerateLocation(){
 }
 
 void rand_number(int num){
-    //snakeEat();
+
     srand(time(0));
     int key=0,j=0;
     for(int i=0;i<3;i++){
@@ -64,6 +66,7 @@ void rand_number(int num){
             }
         }
     }
+
     for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
         key=number[i];
         j=i-1;
@@ -79,13 +82,13 @@ void rand_number(int num){
 
 }
 
-void numberics(int num , string numberic[]){
+/* void numberics(int num , string numberic[]){
     rand_number(num);
     for(int i=0;i<6;i++){
         numberic[i] = to_string(number[i]);  
     }
 
-}
+} */
 
 void Setup(){
     int num;
@@ -101,7 +104,7 @@ void Draw(int num){
     cout << "             SMART Snake Game   \n";
     cout << "                Number is " <<    num   << "\n";
     cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
-numberics(num,numberic);
+//numberics(num,numberic);
     string text[height] ;
     for(int i=0;i<height;i++){
         for(int j=0;j<width;j++){
@@ -117,8 +120,8 @@ numberics(num,numberic);
             }else{
              if(j == NumberX[k]&&i== NumberY[k]){
                     //cout << number[k];
-                    //text[i]+= to_string(number[k]);
-                    text[i]+= numberic[k];
+                    text[i]+= to_string(number[k]);
+                    //text[i]+= numberic[k];
                     k++;
                 }else{ 
                     //cout << " ";
@@ -189,12 +192,14 @@ void Logic(){
         gameOver = true;
 
 
-    for(int i=0;i<6;i++){
+/*     for(int i=0;i<6;i++){
         if(NumberY[w] == locationY && NumberX[w] == locationX){
             numberic[w] = " ";
            
         }
-    }
+    }  */
+
+
 
 
     /*bool foundNum = false;
@@ -211,6 +216,18 @@ void Logic(){
     }*/
 }
 
+void fruitnum(){
+
+    while(w<2){
+        for(int i=0;i<6;i++){
+            if(NumberY[i] == locationY && NumberX[i] == locationX){
+                a[w]=number[i];
+                w++;
+            }
+        }
+    } 
+}
+
 int playsnake(){
     vector<int> number = {1, 2, 3};
     // Seed the random number generator with the current time
@@ -223,13 +240,15 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        numberics(num,numberic);
+        //numberics(num,numberic);
+        rand_number(num);
 
     while (!gameOver){
-         
+        cout << a[0] << " " << a[1];
         Draw(num);
         Input();
         Logic();
+        fruitnum();
         Sleep(20);
     
     }
