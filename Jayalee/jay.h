@@ -91,23 +91,33 @@ void Draw(int num){
     cout << "                Number is " <<    num   << "\n";
     cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
 
+    string text[height] ;
     for(int i=0;i<height;i++){
         for(int j=0;j<width;j++){
             if(i==0||i==height-1){
-                cout<<"_";
+                //cout<<"_";
+                text[i]+= "_";
             }else if(j==0||j==width-1){
-                cout<<"|";
+                //cout<<"|";
+                text[i]+= "|";
             }else if(i == locationY && j == locationX){
-                cout << "#"; 
+                //cout << "#"; 
+                text[i]+= "#";
             }else{
              if(j == NumberX[k]&&i== NumberY[k]){
-                    cout << number[k];
+                    //cout << number[k];
+                    text[i]+= to_string(number[k]);
                     k++;
                 }else{ 
-                    cout << " ";
+                    //cout << " ";
+                    text[i]+= " ";
                 }
             }
             
+            for(int i=0;i<height;i+=1){
+                cout << text[i]<<endl;
+            }
+
             bool foundNum = false;
             for (int k = 0; k < nums.size(); k++){
                 if (!foundNum){
@@ -195,13 +205,13 @@ int playsnake(){
 
         GenerateLocation();
         rand_number(num);        
-    while (!gameOver){   
+    //while (!gameOver){   
         Draw(num);
         Input();
         Logic();
-        system("cls");
+        //system("cls");
         Sleep(20);
-    }
+    //}
 
     return 1;
 }
