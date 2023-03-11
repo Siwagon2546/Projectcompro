@@ -12,16 +12,15 @@ const int width = 40;
 const int height = 20;
 
 int locationX=1, locationY=1;
-//int score;
+
 bool gameOver;
 int NumberX[6];
 int NumberY[6];
 int k=0;
 int w=0;
 int number[6];
-//string numberic[6]={};
 int a[3];
-
+int level=0;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -88,7 +87,6 @@ void Setup(){
     gameOver = false;
     dir = STOP;
     GenerateLocation();
-   // rand_number(num);
 }
 
 void Draw(int num){
@@ -97,6 +95,7 @@ void Draw(int num){
     cout << "                Number is " <<    num   << "\n";
     cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
     cout << "__ + __ " << " = " <<num << "\n";
+    cout << "               Level " << level+1 << "\n";
 
     string text[height] ;
     for(int i=0;i<height;i++){
@@ -128,7 +127,6 @@ void Draw(int num){
                     foundNum = true;
                 }
             }
-            //if (!foundNum){}
     
         }
         
@@ -206,20 +204,17 @@ void Logic(){
 }
 
 void checkAns(int num){
-
-    if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height)
-        gameOver = true;
-
     if(a[0]==0 || a[1]==0){
         gameOver = false;
     }else if(a[0]!=0 && a[1]!=0){
         if(a[0]+a[1]==num){
             cout << "You win";
+            level+=1;
         }else{
-            cout << "You lose";
-            
+            cout << "You lose";    
         }
-        //gameOver = true;
+        Sleep(1500);
+        gameOver = true;
     } 
 }
 
@@ -235,7 +230,6 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        //numberics(num,numberic);
         rand_number(num);
 
     while (!gameOver){
@@ -244,7 +238,6 @@ int playsnake(){
         Input();
         Logic();
         checkAns(num);
-        //fruitnum();
         Sleep(20);
     
     }
