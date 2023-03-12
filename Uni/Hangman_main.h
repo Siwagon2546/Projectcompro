@@ -7,6 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <cctype>
 
 using namespace std;
 
@@ -27,7 +28,8 @@ void HangManCreate(int tries){
 	cout << "     " << endl;
 }
 
-void importWord(int lv, vector<string> &x){
+void importWord(int lv, vector<string> &x){  //x = word lmao
+
 	if(lv == 1){
 		ifstream word;
     	word.open("word/lv1.txt");
@@ -114,11 +116,40 @@ void importWord(int lv, vector<string> &x){
 	
 }
 
-void HangManPlay(int lv){
+string Lowercase(const string& word){
+	int num = word.length();
+	string lowerWord = "";
 
-	if(lv <= 0 || lv > 6) cout << "WTF";
+	for (int i = 0; i < word.length(); i++) {
+        lowerWord += tolower(word[i]);
+    }
 
-	srand (time(NULL));
+	return lowerWord;
+}
+
+void HintWord(const string& word, int lv) {
+    srand(time(nullptr));
+    int letterNum1 = rand() % word.length();
+	int letterNum2 = rand() % word.length();
+	while(letterNum2 == letterNum1) letterNum2 = rand() % word.length();
+
+	string wordHint1;
+	string wordHint2;
+
+	if(word.length() < 5){
+		wordHint1 = word[letterNum1];
+		cout << Lowercase(wordHint1);
+	}else if(lv >= 5){
+		wordHint1 = word[letterNum1];
+		wordHint2 = word[letterNum2];
+		cout << Lowercase(wordHint1) << " " << Lowercase(wordHint2);
+	}
+
+}
+
+int HangManPlay(int lv){
+
+	srand (time(nullptr));
 
 	HANDLE Text_Color = GetStdHandle(STD_OUTPUT_HANDLE); // Set for text-color //
 		SetConsoleTextAttribute(Text_Color,15);
@@ -128,24 +159,35 @@ void HangManPlay(int lv){
 	string guessed;
 	
 	importWord(lv,wordList);
-	if(lv <= 5) word = wordList[rand()%500];
-	else if(lv == 6) word = wordList[rand()%2218];
+	if(lv <= 5) word = wordList[rand()%499];
+	else if(lv == 6) word = wordList[rand()%2217];
+
+	word = Lowercase(word);
 
 	int wordLength = word.length();
 	string dispWord (wordLength, '_');
+
+
 	
 	int found = 0;
 	char guess = ' ';
 	int tries = 0;
 	int flagFound = 0;
     int WRONGTRIES = 6;
-
+	bool Exit = false;
 
 	while(tries>=0){
 
 		system("cls");
 
-		cout << "Level : " << lv << endl;
+		cout << "\tLevel : " << lv << endl;
+
+		if(lv > 3){
+			cout << "\tHint : ";
+			HintWord(word,lv); 
+			cout << endl << endl;
+		}
+
 		cout << "Guess The Word: " << endl << endl;
 		 
 		for(int i = 0; i < wordLength; i++)
@@ -167,7 +209,13 @@ void HangManPlay(int lv){
 			cout << "******************" << endl;
 			cout << "*     You Win    *" << endl;
 			cout << "* Bro So Good XD *" << endl;
-			cout << "******************" << endl << endl;
+			cout << "******************" << endl;
+
+			SetConsoleTextAttribute(Text_Color,15);
+			cout << " Answer : " << word << endl;
+			Sleep(1500);
+
+			return 1;
 			break;
 		}
 		
@@ -175,8 +223,19 @@ void HangManPlay(int lv){
 		
 		cout<<"Pick a Letter:";
 		guess = getche();
+		guess = tolower(guess);
+
+		if(guess == 27){
+			system("cls");
+            cout << endl << endl <<"\tEXIT" ;
+            Sleep(1500);
+            system("cls");
+			Exit = true;
+            break;
+		}
 		
 		guessed = guessed + " " + guess;
+		guessed = Lowercase(guessed);
 		
 		if( dispWord.find(guess) != string::npos ) tries++;
 		
@@ -193,18 +252,26 @@ void HangManPlay(int lv){
 			tries++;
 	}
 
-	if( found != wordLength ){
+	while(Exit == false){
 
-		SetConsoleTextAttribute(Text_Color,4);
-		cout << endl;
-		cout << "******************" << endl;
-		cout << "*    You Lose    *" << endl;
-		cout << "* GGEZ Noob Shit *" << endl;
-		cout << "******************" << endl << endl;
+		if(Exit == true){
+        	break;
+    	}
+
+		if( found != wordLength ){
+			SetConsoleTextAttribute(Text_Color,4);
+			cout << endl;
+			cout << "******************" << endl;
+			cout << "*    You Lose    *" << endl;
+			cout << "* GGEZ Noob Shit *" << endl;
+			cout << "******************" << endl;
+
+			SetConsoleTextAttribute(Text_Color,15);
+			cout << " Answer : " << word << endl;
+			Sleep(1500);
+
+			return 0;
+		}
 	}
 
-	SetConsoleTextAttribute(Text_Color,15);
-	cout << "Answer : " << word;
-	
-	getch();
 }

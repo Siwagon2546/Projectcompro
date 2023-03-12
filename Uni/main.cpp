@@ -1,5 +1,5 @@
 #include "Hangman_main.h"
 
 int main(){
-    HangManPlay(6);
+    HangManPlay(5);
 }
