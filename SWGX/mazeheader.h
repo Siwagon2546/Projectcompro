@@ -10,12 +10,14 @@ class maze{
     public:
     char input;
     bool win=false;
+    bool exitcheck=false;
     int h;
     int w;
     int playerRow = 1;
     int playerCol = 1;
     int goalRow;
     int goalCol;
+
     vector<vector<int>> maze;
     vector<int> generateRandomDirections();
     void recursion(int,int);
@@ -24,10 +26,12 @@ class maze{
     void movePlayer(int , int);
     void move();
     void wincheck();
+    int exit_c();
 
 };
 
 void maze::move(){
+    if(!exitcheck){
     input = getch();
     switch (input) {
         case 'w':
@@ -43,10 +47,11 @@ void maze::move(){
             movePlayer(0, 1);
             break;
         case 'q':
-            exit(0); // quit the game
+            exitcheck = true; // quit the game
         default:
             break;
     }
+}
 }
 
 
@@ -143,7 +148,6 @@ void maze::drawMaze() {
         cout << endl;
         
     }
-    cout<<win<< " "<<goalRow<<" "<<goalCol<< " "<<playerRow<<" "<<playerCol;
 }
 
 void maze::movePlayer(int rowOffset, int colOffset) {
@@ -164,20 +168,27 @@ void maze::wincheck(){
 }
 
 
-
-void mazeplay(int k){
+int mazeplay(int k){
     maze x;
+    int o;
     x.h=5*k;
     x.w=5*k;
 
     x.maze=x.generateMaze();
     
-    while (!x.win){
+    while (true){
     system("cls");
     x.drawMaze();
     x.move();
     x.wincheck();
-    
+    if(x.win){
+        return 1;
+    }else if(x.exitcheck){
+        cout <<"exit\n";
+        return 0;
+
+    }
+
     }
 
 }
