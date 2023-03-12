@@ -171,8 +171,8 @@ void maze::wincheck(){
 int mazeplay(int k){
     maze x;
     int o;
-    x.h=5*k;
-    x.w=5*k;
+    x.h=10*k-1;
+    x.w=10*k-1;
 
     x.maze=x.generateMaze();
     
