@@ -377,7 +377,6 @@ int playsnake(){
         Sleep(30);
     }
 
-    
 
     return 1;
 }
