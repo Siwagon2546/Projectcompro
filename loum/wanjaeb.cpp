@@ -15,6 +15,11 @@ class PLAY{
     int startselect;
     vector<int> scorevector;
     vector<string> namevector;
+    int FSlvl;
+    int MZlVl;
+    int HMlvl;
+    int SNlvl;
+    int NPlvl;
 
     void fileread();
     void gamestart();
@@ -22,7 +27,7 @@ class PLAY{
     void createuser();
     void startmenu();
     //void scoreboard();
-    //void leveled();
+    void leveled();
     //ใส่สี
     //เพิ่มเกม
 };
@@ -295,6 +300,7 @@ void PLAY::startmenu(){
     cout << "\t[0]"<< " Select Username" << endl;
     cout << "\t[/]"<< " ScoreBoard" << endl;
     cout << "\t[Esc]"<< " EXIT AND SAVE" << endl;
+    //cout << "\t" << FSlvl << endl;
 
     int input;
     do{
@@ -319,7 +325,7 @@ void PLAY::startmenu(){
             playable = false;
             break;
         case 49:
-            scorevector[select-1]+=playFluidsort(1);
+            scorevector[select-1]+=playFluidsort(FSlvl);
             break;
         case 50:
             startselect = 2;
@@ -338,6 +344,33 @@ void PLAY::startmenu(){
 
 }
 
+void PLAY::leveled(){
+    if(scorevector[select-1] <2){
+        FSlvl = 1;
+    }else if(scorevector[select-1] < 5){
+        FSlvl = 2;
+    }else if(scorevector[select-1] < 7){
+        FSlvl = 3;
+    }else if(scorevector[select-1] < 9){
+        FSlvl = 4;
+    }else if(scorevector[select-1] < 12){
+        FSlvl = 5;
+    }else if(scorevector[select-1] < 15){
+        FSlvl = 6;
+    }else if(scorevector[select-1] < 18){
+        FSlvl = 7;
+    }else if(scorevector[select-1] < 21){
+        FSlvl = 8;
+    }else if(scorevector[select-1] < 26){
+        FSlvl = 9;
+    }else if(scorevector[select-1] < 31){
+        FSlvl = 10;
+    }else if(scorevector[select-1] < 36){
+        FSlvl = 11;
+    }else FSlvl = 12;
+
+}
+
 int main(){
     PLAY play;
 
@@ -350,6 +383,7 @@ while(!play.playable){
     play.createuser();
 }
 while(play.playable){
+    play.leveled();
     play.startmenu();
 }
 }
