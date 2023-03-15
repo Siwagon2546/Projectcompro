@@ -7,7 +7,7 @@
 #include <algorithm>
 
 using namespace std;
-
+ 
 const int width = 40;
 const int height = 20;
 
