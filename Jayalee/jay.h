@@ -178,7 +178,6 @@ void rand_number(int num,int level){
         int g = rand()%5;
         number[5]=num-number[g];        
     }
-int nu
 
 }
 
