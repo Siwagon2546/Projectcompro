@@ -21,7 +21,7 @@ int k=0;
 int w=0;
 int number[6];
 int a[3];
-int level=0;
+int level=1;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
