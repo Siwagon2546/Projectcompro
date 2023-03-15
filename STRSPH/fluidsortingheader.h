@@ -258,7 +258,7 @@ void fluidsort::showstage(){
                 case 7:
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
-                    SetConsoleTextAttribute(hConsole, 48);
+                    SetConsoleTextAttribute(hConsole, 176);
                     cout << "  ";
                     //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
