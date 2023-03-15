@@ -10,8 +10,9 @@ class PLAY{
     int select;
     bool nouser = true;
     string name;
+    bool playable = false; 
     int score;
-    //int startselect;
+    int startselect;
     vector<int> scorevector;
     vector<string> namevector;
 
@@ -21,6 +22,9 @@ class PLAY{
     void createuser();
     void startmenu();
     //void scoreboard();
+    //void leveled();
+    //ใส่สี
+    //เพิ่มเกม
 };
 
 fstream FileSave;
@@ -62,45 +66,54 @@ void PLAY::userselect(){
     cout << endl;
     cout << "\t" << "[0]" << " Create new user" << endl;
     cout << "\t" << "[/]" << " Delete user" << endl;
-    cout << "\t" << "[ESC]" << " EXIT" << endl ;
+    //cout << "\t" << "[ESC]" << " EXIT" << endl ;
     //cout << usercount;
     int input;
     do{
     input = getch();
     switch(input){
-        case 27:
+        /*case 27:
             system("cls");
         cout << endl << endl <<"\tEXIT" ;
         Sleep(1500);
         system("cls");
         exit(0);
-            break;
+            break;*/
         case '1':
             select = 1;
+            playable = true;
             break;
         case '2':
             select = 2;
+            playable = true;
             break;
         case '3':
             select = 3;
+            playable = true;
             break;
         case '4':
             select = 4;
+            playable = true;
             break;
         case '5':
             select = 5;
+            playable = true;
             break;
         case '6':
             select = 6;
+            playable = true;
             break;
         case '7':
             select = 7;
+            playable = true;
             break;
         case '8':      
             select = 8;
+            playable = true;
             break;
         case '9':
             select = 9;
+            playable = true;
             break;
         case '0':
             select = 0;
@@ -175,7 +188,7 @@ void PLAY::createuser(){
         for(int i=0;i<namevector.size();i+=1){
         cout << "\t[" << i+1 << "] " << namevector[i] << endl; 
         }
-        cout << endl << "\t" << "[ESC]" << " EXIT" << endl ;
+        cout << endl << "\t" << "[ESC]" << " BACK" << endl ;
 
         int input;
         bool loop = true;
@@ -185,7 +198,7 @@ void PLAY::createuser(){
     switch(input){
         case 27:
             system("cls");
-            cout << endl << endl <<"\tEXIT" ;
+            cout << endl << endl <<"\tBACK" ;
             Sleep(1500);
             system("cls");
             selectdel = 1;
@@ -193,57 +206,30 @@ void PLAY::createuser(){
             break;
         case '1':
             selectdel = 1;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '2':
             selectdel = 2;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '3':
             selectdel = 3;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '4':
             selectdel = 4;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '5':
             selectdel = 5;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '6':
             selectdel = 6;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '7':
             selectdel = 7;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '8':      
             selectdel = 8;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         case '9':
             selectdel = 9;
-            //namevector.erase(namevector.begin()+selectdel-1);
-            //scorevector.erase(scorevector.begin()+selectdel-1);
-            //loop = false ;
             break;
         default:
             break;
@@ -256,6 +242,9 @@ void PLAY::createuser(){
 
     if(input!=27){
     int temp = namevector.size();
+    system("cls");
+    cout << "      " << namevector[selectdel-1] << " has been delete";
+    Sleep(1500);
     namevector.erase(namevector.begin()+selectdel-1);
     scorevector.erase(scorevector.begin()+selectdel-1);
     }
@@ -303,28 +292,34 @@ void PLAY::startmenu(){
     cout << "\t[3]"<< " Hangman" << endl ;
     cout << "\t[4]"<< " NumberSort" << endl ;
     cout << "\t[5]"<< " Eating" << endl << endl;
-    cout << "\t[S]"<< " Select Username" << endl;
-    cout << "\t[B]"<< " ScoreBoard" << endl;
-    cout << "\t[Esc]"<< " EXIT" << endl;
+    cout << "\t[0]"<< " Select Username" << endl;
+    cout << "\t[/]"<< " ScoreBoard" << endl;
+    cout << "\t[Esc]"<< " EXIT AND SAVE" << endl;
 
-    /*switch(getch()){
+    int input;
+    do{
+    input = getch();
+    switch(input){
         case 27:
             system("cls");
-            cout << endl << endl <<"\tEXIT" ;
+            cout << endl << endl <<"\tEXIT AND SAVE" ;
             Sleep(1500);
+            FileSave.open(filesavename);
+        for(int i=0;i<namevector.size();i+=1){
+            FileSave << namevector[i] <<":"<<scorevector[i]<<endl;
+        }
+        FileSave.close();
             system("cls");
             exit(0);
             break;
-        case 66:
-        case 98:
+        case 47:
             startselect = 7;
             break;
-        case 83:
-        case 115:
-            startselect = 6;
+        case 48:
+            playable = false;
             break;
         case 49:
-            startselect = 1;
+            scorevector[select-1]+=playFluidsort(1);
             break;
         case 50:
             startselect = 2;
@@ -338,31 +333,25 @@ void PLAY::startmenu(){
         case 53:
             startselect = 5;
             break;
-    }*/
+    }
+    }while(input <47 || input>53);
+
 }
 
 int main(){
     PLAY play;
-    /*
-    do{
-    play.userselect();
-    while(play.select ==0){
-    break;
-    }
 
-    do{
-    play.startmenu();
-    
-
-    }while((play.startselect !=6));
-
-    }while((play.startselect==6));*/
     play.fileread();
     play.gamestart();
+
+while(true){
+while(!play.playable){
     play.userselect();
     play.createuser();
-    
+}
+while(play.playable){
     play.startmenu();
-    
+}
+}
 }
 

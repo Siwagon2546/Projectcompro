@@ -1,6 +1,10 @@
-STRSPH:2
-test:10
-test2:9595
+STRSPH:4
+test1:0
+test2:2
+test3:1
+
+
+
 
 
 
