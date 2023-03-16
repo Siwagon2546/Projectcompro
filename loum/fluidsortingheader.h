@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <windows.h> //system cls //color
+#include <windows.h> //sleep //color
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -258,7 +258,7 @@ void fluidsort::showstage(){
                 case 7:
                     SetConsoleTextAttribute(hConsole, 15);
                     cout << "\t" <<"|";
-                    SetConsoleTextAttribute(hConsole, 48);
+                    SetConsoleTextAttribute(hConsole, 176);
                     cout << "  ";
                     //cout << " " << bottle2dvector[j][i] << " ";
                     SetConsoleTextAttribute(hConsole, 15);
