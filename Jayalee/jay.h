@@ -195,15 +195,15 @@ void Draw(int num,int level){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     SetConsoleTextAttribute(hConsole, 10);
-    cout << "             SMART Snake Game   \n";
+    cout << "\t             SMART Snake Game   \n";
     SetConsoleTextAttribute(hConsole, 7);
-    cout << "                Number is " <<    num   << "\n";
+    cout << "\t                Number is " <<    num   << "\n";
     SetConsoleTextAttribute(hConsole, 12);
-    cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
+    cout << "\t^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
     SetConsoleTextAttribute(hConsole, 9);
-    cout << "_" << a[0] << "_ + _" << a[2] << "_ " << " = " <<num << "\n";
+    cout << "\t_" << a[0] << "_ + _" << a[2] << "_ " << " = " <<num << "\n";
     SetConsoleTextAttribute(hConsole, 2);
-    cout << "               Level " << level << "\n";
+    cout << "\t               Level " << level << "\n";
 
     string text[height] ;
     for(int i=0;i<height;i++){
@@ -242,7 +242,7 @@ void Draw(int num,int level){
     }
 
     for(int i=0;i<height;i++){
-                cout << text[i]<<endl;
+                cout << "\t"<<text[i]<<endl;
                 //SetConsoleTextAttribute(hConsole, 7);
             }
     SetConsoleTextAttribute(hConsole, 7);
@@ -279,11 +279,11 @@ void Logic(){
     if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height){
         cout << "\n";
         SetConsoleTextAttribute(hConsole, 78);
-        cout << "____________________\n";
-        cout << "                    \n";
-        cout << "      You lose      \n";
-        cout << "                    \n";
-        cout << "____________________\n";
+        cout << "\t____________________\n";
+        cout << "\t                    \n";
+        cout << "\t      You lose      \n";
+        cout << "\t                    \n";
+        cout << "\t____________________\n";
         SetConsoleTextAttribute(hConsole, 7);
         //cout << "  \n";
         gameOver1 = true;
@@ -319,11 +319,11 @@ void checkAns(int num){
         if(a[0]+a[1]==num){ 
             cout << "\n";
             SetConsoleTextAttribute(hConsole, 100);
-            cout << "____________________\n";
-            cout << "                    \n";
-            cout << "      You win       \n";
-            cout << "                    \n";
-            cout << "____________________\n";
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You win       \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             level+=1;
@@ -331,11 +331,11 @@ void checkAns(int num){
         }else{
             cout << "\n";
             SetConsoleTextAttribute(hConsole, 78);
-            cout << "____________________\n";
-            cout << "                    \n";
-            cout << "      You lose      \n";
-            cout << "                    \n";
-            cout << "____________________\n";
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You lose      \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             gameOver1 = true;    
