@@ -321,26 +321,12 @@ void eatnum::checkAns(int num){
     if(a[0]!=0 && a[1]!=0){
         if(a[0]+a[1]==num){ 
             cout << "\n";
-            SetConsoleTextAttribute(hConsole, 100);
-            cout << "\t____________________\n";
-            cout << "\t                    \n";
-            cout << "\t      You win       \n";
-            cout << "\t                    \n";
-            cout << "\t____________________\n";
-            SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             level+=1;
             dir = STOP;
             gameWin = true;
         }else{
             cout << "\n";
-            SetConsoleTextAttribute(hConsole, 78);
-            cout << "\t____________________\n";
-            cout << "\t                    \n";
-            cout << "\t      You lose      \n";
-            cout << "\t                    \n";
-            cout << "\t____________________\n";
-            SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             dir = STOP;
             gameOver1 = true;    
@@ -372,11 +358,23 @@ int playsnake(int lvl){
         x.Logic();
         x.checkAns(num);
         if(x.gameWin){
+            SetConsoleTextAttribute(hConsole, 100);
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You win       \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             Sleep(1500);
             system("cls");
             return 1;
         }else if(x.gameOver1){
+            SetConsoleTextAttribute(hConsole, 78);
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You lose      \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             Sleep(1500);
             system("cls");
