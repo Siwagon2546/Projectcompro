@@ -5,14 +5,16 @@
 #include <conio.h>
 #include <windows.h>
 #include <algorithm>
-
+ 
 using namespace std;
  
 const int width = 40;
 const int height = 20;
 
-int locationX=1, locationY=1;
 
+class eatnum{
+int locationX=1, locationY=1;
+public:
 bool gameWin=false;
 bool gameOver1=false;
 int NumberX[6];
@@ -20,14 +22,23 @@ int NumberY[6];
 int k=0;
 int w=0;
 int number[6];
-int a[3];
+int a[3]={0,0,0};
 int level;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
-
 vector<int> nums;
-void GenerateLocation(){
+void GenerateLocation();
+void rand_number(int ,int );
+void Setup();
+void Draw(int ,int );
+void Input();
+void Logic();
+void checkAns(int );
+};
+
+
+void eatnum::GenerateLocation(){
     srand(time(0));
     int key=0,j=0; 
         for(int i=0;i<6;i++){
@@ -54,7 +65,7 @@ void GenerateLocation(){
     } */
 }
 
-void rand_number(int num,int level){
+void eatnum::rand_number(int num,int level){
 
     srand(time(0));
     int key=0,j=0;
@@ -181,7 +192,7 @@ void rand_number(int num,int level){
 
 }
 
-void Setup(){
+void eatnum::Setup(){
     int num;
     srand(time(NULL));
     gameOver1 = false;
@@ -189,7 +200,7 @@ void Setup(){
     GenerateLocation();
 }
 
-void Draw(int num,int level){
+void eatnum::Draw(int num,int level){
     system("cls");
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -250,7 +261,7 @@ void Draw(int num,int level){
     
 }
 
-void Input(){
+void eatnum::Input(){
 
     if (_kbhit())
     {
@@ -274,18 +285,10 @@ void Input(){
 
 }
 
-void Logic(){
+void eatnum::Logic(){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height){
-        cout << "\n";
-        SetConsoleTextAttribute(hConsole, 78);
-        cout << "\t____________________\n";
-        cout << "\t                    \n";
-        cout << "\t      You lose      \n";
-        cout << "\t                    \n";
-        cout << "\t____________________\n";
-        SetConsoleTextAttribute(hConsole, 7);
-        //cout << "  \n";
+        dir = STOP;
         gameOver1 = true;
     }else{
         switch (dir){
@@ -313,7 +316,7 @@ void Logic(){
     }   
 }
 
-void checkAns(int num){
+void eatnum::checkAns(int num){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     if(a[0]!=0 && a[1]!=0){
         if(a[0]+a[1]==num){ 
@@ -327,6 +330,7 @@ void checkAns(int num){
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             level+=1;
+            dir = STOP;
             gameWin = true;
         }else{
             cout << "\n";
@@ -338,6 +342,7 @@ void checkAns(int num){
             cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
+            dir = STOP;
             gameOver1 = true;    
         }
         Sleep(3000);
@@ -348,6 +353,7 @@ void checkAns(int num){
 int playsnake(int lvl){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     vector<int> number = {1, 2, 3};
+    eatnum x;
     // Seed the random number generator with the current time
     srand(time(0));
     //For random number
@@ -357,20 +363,20 @@ int playsnake(int lvl){
     // Randomize the position of the random number in the vector
     random_shuffle(number.begin(), number.end());
 
-        GenerateLocation();
-        rand_number(num,lvl);
+    x.GenerateLocation();
+    x.rand_number(num,lvl);
 
     while (true){
-        Draw(num,lvl);
-        Input();
-        Logic();
-        checkAns(num);
-        if(gameWin){
+        x.Draw(num,lvl);
+        x.Input();
+        x.Logic();
+        x.checkAns(num);
+        if(x.gameWin){
             SetConsoleTextAttribute(hConsole, 7);
             Sleep(1500);
             system("cls");
             return 1;
-        }else if(gameOver1){
+        }else if(x.gameOver1){
             SetConsoleTextAttribute(hConsole, 7);
             Sleep(1500);
             system("cls");
