@@ -8,24 +8,25 @@
 #include <fstream>
 #include <iomanip>
 #include <cctype>
+#include <time.h>
 
 using namespace std;
 
 void HangManCreate(int tries){
 
     cout << endl << endl;
-    cout << "   -----" << endl;
-    cout << "   |   |" << endl;
-    cout << "   |"; if(tries >= 1) cout << "   O   "; cout << endl;
-    cout << "   |"; if(tries >= 2) cout << "  /"; 
-                    if(tries >= 3) cout << "|";
-                    if(tries >= 4) cout << "\\"; cout << endl;
-    cout << "   |"; if(tries >= 5) cout << "  /";
-                    if(tries >= 6) cout << " \\"; cout << endl;
-    cout << "   |" << endl;
-    cout << "  _|_" << endl;
-	cout << "     " << endl;
-	cout << "     " << endl;
+    cout << "\t   -----" << endl;
+    cout << "\t   |   |" << endl;
+    cout << "\t   |"; if(tries >= 1) cout << "\t   O   "; cout << endl;
+    cout << "\t   |"; if(tries >= 2) cout << "\t  /"; 
+                    if(tries >= 3) cout << "\t|";
+                    if(tries >= 4) cout << "\t\\"; cout << endl;
+    cout << "\t   |"; if(tries >= 5) cout << "\t  /";
+                    if(tries >= 6) cout << "\t \\"; cout << endl;
+    cout << "\t   |" << endl;
+    cout << "\t  _|_" << endl;
+	cout << "\t    " << endl;
+	cout << "\t     " << endl;
 }
 
 void importWord(int lv, vector<string> &x){  //x = word lmao
@@ -127,26 +128,6 @@ string Lowercase(const string& word){
 	return lowerWord;
 }
 
-void HintWord(const string& word, int lv) {
-    srand(time(nullptr));
-    int letterNum1 = rand() % word.length();
-	int letterNum2 = rand() % word.length();
-	while(letterNum2 == letterNum1) letterNum2 = rand() % word.length();
-
-	string wordHint1;
-	string wordHint2;
-
-	if(word.length() < 5){
-		wordHint1 = word[letterNum1];
-		cout << Lowercase(wordHint1);
-	}else if(lv >= 5){
-		wordHint1 = word[letterNum1];
-		wordHint2 = word[letterNum2];
-		cout << Lowercase(wordHint1) << " " << Lowercase(wordHint2);
-	}
-
-}
-
 int HangManPlay(int lv){
 
 	srand (time(nullptr));
@@ -157,7 +138,9 @@ int HangManPlay(int lv){
 	vector<string> wordList;
 	string word;
 	string guessed;
-	
+	int number = 3;
+	char hint = ' ';
+
 	importWord(lv,wordList);
 	if(lv <= 5) word = wordList[rand()%499];
 	else if(lv == 6) word = wordList[rand()%2217];
@@ -166,10 +149,9 @@ int HangManPlay(int lv){
 
 	int wordLength = word.length();
 	string dispWord (wordLength, '_');
-
-
 	
 	int found = 0;
+	int i = 0;
 	char guess = ' ';
 	int tries = 0;
 	int flagFound = 0;
@@ -181,13 +163,6 @@ int HangManPlay(int lv){
 		system("cls");
 
 		cout << "\tLevel : " << lv << endl;
-
-		if(lv > 3){
-			cout << "\tHint : ";
-			HintWord(word,lv); 
-			cout << endl << endl;
-		}
-
 		cout << "Guess The Word: " << endl << endl;
 		 
 		for(int i = 0; i < wordLength; i++)
@@ -220,37 +195,81 @@ int HangManPlay(int lv){
 		}
 		
 		if(tries == 6) break; 
-		
+
+		if(lv > 3){
+			cout << "It's to hard for you.We shall give you a hint." << endl;
+			cout << "Press 1 to optain hint." << endl;
+
+
+			if(wordLength < 6) cout << "You have " << number - 2 << " hint." << endl << endl;
+			if(wordLength >= 6 && wordLength < 8) cout << "You have " << number - 1 << " hint." << endl << endl;
+			if(wordLength >= 8) cout << "You have " << number << " hint." << endl << endl;
+
+		}
+
 		cout<<"Pick a Letter:";
+
 		guess = getche();
 		guess = tolower(guess);
 
-		if(guess == 27){
-			system("cls");
-            cout << endl << endl <<"\tEXIT" ;
-            Sleep(1500);
-            system("cls");
-			Exit = true;
-            break;
-		}
+		flagFound = 0;
+
+			if(wordLength < 6){
+				if(guess == 49 && found == 0){
+					dispWord[0] = word[0];
+					found++;
+					number--;
+					flagFound = 1;
+				}
+			}
+
+			if(wordLength >= 6 && wordLength < 8){
+				if(guess == 49 && found < 2){
+					dispWord[i] = word[i];
+					found++;
+					flagFound = 1;
+					number--;
+					i++;
+				}
+			}
+
+			if(wordLength >= 8){
+				if(guess == 49 && found < 3){
+					dispWord[i] = word[i];
+					found++;
+					flagFound = 1;
+					number--;
+					i++;
+				}
+			}
+
+			if(guess == 27){
+				system("cls");
+				cout << endl << endl <<"\tEXIT" ;
+				Sleep(1500);
+				system("cls");
+				Exit = true;
+				return 0;
+				break;
+			}
 		
 		guessed = guessed + " " + guess;
 		guessed = Lowercase(guessed);
-		
+
 		if( dispWord.find(guess) != string::npos ) tries++;
 		
-		flagFound = 0;
-		for(int i=0; i<wordLength; i++){
-			if( word[i]==guess && dispWord[i]=='_' ){
-				dispWord[i] = guess;
-				found++;
-				flagFound = 1; 
+			for(int i=0; i<wordLength; i++){
+				if( word[i]==guess && dispWord[i]=='_' ){
+					dispWord[i] = guess;
+					found++;
+					flagFound = 1; 
+				}
 			}
-		}
-		 
+	
 		if( !flagFound )
 			tries++;
 	}
+
 
 	while(Exit == false){
 
@@ -273,5 +292,5 @@ int HangManPlay(int lv){
 			return 0;
 		}
 	}
-
 }
+
