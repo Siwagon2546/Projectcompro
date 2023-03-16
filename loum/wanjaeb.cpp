@@ -2,6 +2,7 @@
 #include "fluidsortingheader.h"
 #include "mazeheader.h"
 #include "jay.h"
+#include "15pzgame.h"
 
 #include <fstream>
 #include <string>
@@ -31,12 +32,18 @@ class PLAY{
     void scoreboard();
     void leveled();
     //ใส่สี
-    //เพิ่มเกม
+    //fs
+    //15
+    //mz lvled
+    //sn
+    //hm add
 };
 
 fstream FileSave;
 
 void PLAY::fileread(){
+    namevector.clear();
+    scorevector.clear();
     FileSave.open(filesavename);
     string text;
     char name[100];
@@ -56,23 +63,38 @@ void PLAY::fileread(){
 }
 
 void PLAY::gamestart(){
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     system("cls");
+    SetConsoleTextAttribute(hConsole, 9);
     cout << endl << endl << "WAAN JAEB ARCADE GAME";
+    SetConsoleTextAttribute(hConsole, 10);
     cout << endl << endl << endl << endl << "Press any key to continue";
+    SetConsoleTextAttribute(hConsole, 15);
     getch();
 }
 
 void PLAY::userselect(){
     system("cls");
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 9);
     cout << "      Please select user"<< endl;
+    SetConsoleTextAttribute(hConsole, 15);
     if(nouser !=true){
     for(int i=0;i<namevector.size();i+=1){
         cout << "\t[" << i+1 << "] " << namevector[i] << endl; 
         //cout << namevector.size();
-    }}else{cout << "\t   Please create new user";}
+        
+    }}//else{cout << "\t   Please create new user";}
+    
     cout << endl;
+    SetConsoleTextAttribute(hConsole, 10);
     cout << "\t" << "[0]" << " Create new user" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    SetConsoleTextAttribute(hConsole, 14);
     cout << "\t" << "[/]" << " Delete user" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
     //cout << "\t" << "[ESC]" << " EXIT" << endl ;
     //cout << usercount;
     int input;
@@ -138,6 +160,8 @@ void PLAY::userselect(){
 }
 
 void PLAY::createuser(){
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     if(select ==0 && namevector.size() <9){
     system("cls");
     cout << "      Please enter your name" << endl;
@@ -191,11 +215,15 @@ void PLAY::createuser(){
 
     if(select == -1){       //delete
         system("cls");
+        SetConsoleTextAttribute(hConsole, 12);
         cout << "      Select to delete" << endl;
+        SetConsoleTextAttribute(hConsole, 15);
         for(int i=0;i<namevector.size();i+=1){
         cout << "\t[" << i+1 << "] " << namevector[i] << endl; 
         }
+        SetConsoleTextAttribute(hConsole, 14);
         cout << endl << "\t" << "[ESC]" << " BACK" << endl ;
+        SetConsoleTextAttribute(hConsole, 15);
 
         int input;
         bool loop = true;
@@ -375,7 +403,7 @@ void PLAY::startmenu(){
             scorevector[select-1]+=HangManPlay(HMlvl);
             break;
         case 52:
-            //scorevector[select-1]+=
+            scorevector[select-1]+=playPuzzle(NPlvl);
             break;
         case 53:
             scorevector[select-1]+=playsnake(SNlvl);
@@ -387,6 +415,7 @@ void PLAY::startmenu(){
 
 void PLAY::leveled(){
     MZlVl = (scorevector[select-1]/20)+1;
+
     if(scorevector[select-1] <2){
         FSlvl = 1;
     }else if(scorevector[select-1] < 5){
@@ -435,7 +464,11 @@ void PLAY::leveled(){
         SNlvl = 4;
     }else SNlvl = 5;
     
-
+    if(scorevector[select-1] < 10){
+        NPlvl = 4;
+    }else if(scorevector[select-1] < 20){
+        NPlvl = 6;
+    }else NPlvl = 8;
 
 
 }
@@ -443,11 +476,12 @@ void PLAY::leveled(){
 int main(){
     PLAY play;
 
-    play.fileread();
+    
     play.gamestart();
 
 while(true){
 while(!play.playable){
+    play.fileread();
     play.userselect();
     play.createuser();
 }
