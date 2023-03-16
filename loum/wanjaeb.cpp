@@ -476,7 +476,6 @@ void PLAY::leveled(){
 int main(){
     PLAY play;
 
-    
     play.gamestart();
 
 while(true){
