@@ -317,7 +317,6 @@ void PLAY::scoreboard(){ //ต้องทำให้เรียงมาก�
     input = getch();
     }while(input !=27);
     SBviwe = false;
-    
     }
     
     
