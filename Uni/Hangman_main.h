@@ -220,7 +220,7 @@ int HangManPlay(int lv){
 
 		}
 
-		cout<<"Pick a Letter:";
+		cout<<"Pick a Letter : ";
 
 		guess = getche();
 		guess = tolower(guess);
