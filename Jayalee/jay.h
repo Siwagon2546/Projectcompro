@@ -7,20 +7,21 @@
 #include <algorithm>
 
 using namespace std;
-
+ 
 const int width = 40;
 const int height = 20;
 
 int locationX=1, locationY=1;
 
-bool gameOver;
+bool gameWin=false;
+bool gameOver1=false;
 int NumberX[6];
 int NumberY[6];
 int k=0;
 int w=0;
 int number[6];
 int a[3];
-int level=0;
+int level;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -53,64 +54,172 @@ void GenerateLocation(){
     } */
 }
 
-void rand_number(int num){
+void rand_number(int num,int level){
 
     srand(time(0));
     int key=0,j=0;
-    for(int i=0;i<3;i++){
-        number[i] = rand()%5+1; 
-        for(int j=0;j<i;j++){
-            if(number[i]==number[j]){
-                i--;
+    if(level == 1){
+        for(int i=0;i<1;i++){
+            number[i] = rand()%5+1; 
+        }
+        number[1] = num-number[0];
+        number[2] = num-number[0];
+        number[3] = num-number[0];
+        number[4] = num-number[0];
+        number[5] = num-number[0];
+    }else if(level == 1){
+        for(int i=0;i<2;i++){
+            number[i] = rand()%5+1; 
+            for(int j=0;j<i;j++){
+                if(number[i]==number[j]){
+                    i--;
+                }
             }
         }
-    }
 
-    for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
-        key=number[i];
-        j=i-1;
-    while(j>=0 && number[j]>key){
-        number[j+1]=number[j];
-        j-=1;
+        for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
+            key=number[i];
+            j=i-1;
+        while(j>=0 && number[j]>key){
+            number[j+1]=number[j];
+            j-=1;
+        }
+        number[j+1]=key;
+        }
+        number[2]=num-number[0];
+        number[3]=num-number[0];
+        number[4]=num-number[1];
+        number[5]=num-number[1];        
+    }else if(level == 2){
+        for(int i=0;i<2;i++){
+            number[i] = rand()%5+1; 
+            for(int j=0;j<i;j++){
+                if(number[i]==number[j]){
+                    i--;
+                }
+            }
+        }
+
+        for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
+            key=number[i];
+            j=i-1;
+        while(j>=0 && number[j]>key){
+            number[j+1]=number[j];
+            j-=1;
+        }
+        number[j+1]=key;
+        }
+        number[2]=num-number[1];
+        number[3]=num-number[0];
+        number[4]=num-number[1];
+        number[5]=num-number[0];        
+    }else if(level == 3){
+        for(int i=0;i<3;i++){
+            number[i] = rand()%5+1; 
+            for(int j=0;j<i;j++){
+                if(number[i]==number[j]){
+                    i--;
+                }
+            }
+        }
+
+        for(int i=0;i<(sizeof(number) / sizeof(int))-3;i++){
+            key=number[i];
+            j=i-1;
+        while(j>=0 && number[j]>key){
+            number[j+1]=number[j];
+            j-=1;
+        }
+        number[j+1]=key;
+        }
+        number[3]=num-number[0];
+        number[4]=num-number[1];
+        number[5]=num-number[2];        
+    }else if(level == 4){
+        for(int i=0;i<4;i++){
+            number[i] = rand()%5+1; 
+            for(int j=0;j<i;j++){
+                if(number[i]==number[j]){
+                    i--;
+                }
+            }
+        }
+
+        for(int i=0;i<(sizeof(number) / sizeof(int))-2;i++){
+            key=number[i];
+            j=i-1;
+        while(j>=0 && number[j]>key){
+            number[j+1]=number[j];
+            j-=1;
+        }
+        number[j+1]=key;
+        }
+        number[4]=num-number[1];
+        number[5]=num-number[2];        
+    }else if(level == 5){
+        for(int i=0;i<5;i++){
+            number[i] = rand()%5+1; 
+            for(int j=0;j<i;j++){
+                if(number[i]==number[j]){
+                    i--;
+                }
+            }
+        }
+
+        for(int i=0;i<(sizeof(number) / sizeof(int))-1;i++){
+            key=number[i];
+            j=i-1;
+        while(j>=0 && number[j]>key){
+            number[j+1]=number[j];
+            j-=1;
+        }
+        number[j+1]=key;
+        }
+        int g = rand()%5;
+        number[5]=num-number[g];        
     }
-    number[j+1]=key;
-    }
-    number[3]=num-number[0];
-    number[4]=num-number[1];
-    number[5]=num-number[2];
 
 }
 
 void Setup(){
     int num;
     srand(time(NULL));
-    gameOver = false;
+    gameOver1 = false;
     dir = STOP;
     GenerateLocation();
 }
 
-void Draw(int num){
+void Draw(int num,int level){
     system("cls");
-    cout << "             SMART Snake Game   \n";
-    cout << "                Number is " <<    num   << "\n";
-    cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
-    cout << "__ + __ " << " = " <<num << "\n";
-    cout << "               Level " << level+1 << "\n";
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << "\t             SMART Snake Game   \n";
+    SetConsoleTextAttribute(hConsole, 7);
+    cout << "\t                Number is " <<    num   << "\n";
+    SetConsoleTextAttribute(hConsole, 12);
+    cout << "\t^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
+    SetConsoleTextAttribute(hConsole, 9);
+    cout << "\t_" << a[0] << "_ + _" << a[2] << "_ " << " = " <<num << "\n";
+    SetConsoleTextAttribute(hConsole, 2);
+    cout << "\t               Level " << level << "\n";
 
     string text[height] ;
     for(int i=0;i<height;i++){
+        SetConsoleTextAttribute(hConsole, 240);
         for(int j=0;j<width;j++){
-            if(i==0||i==height-1){
+            if(i==0 || i==height-1){
                 //cout<<"_";
-                text[i]+= "_";
-            }else if(j==0||j==width-1){
+                text[i]+=  "_";
+            }else if(j==0 || j==width-1){
                 //cout<<"|";
                 text[i]+= "|";
             }else if(i == locationY && j == locationX){
-                //cout << "#"; 
+                //cout << "#";
                 text[i]+= "#";
             }else{
-             if(j == NumberX[k]&&i== NumberY[k]){
+             if(j == NumberX[k] && i== NumberY[k]){
                     //cout << number[k];
                     text[i]+= to_string(number[k]);
                     //text[i]+= numberic[k];
@@ -130,13 +239,15 @@ void Draw(int num){
     
         }
         
-        }
+    }
 
-    for(int i=0;i<height;i+=1){
-                cout << text[i]<<endl;
+    for(int i=0;i<height;i++){
+                cout << "\t"<<text[i]<<endl;
+                //SetConsoleTextAttribute(hConsole, 7);
             }
-    
+    SetConsoleTextAttribute(hConsole, 7);
         k=0;
+    
 }
 
 void Input(){
@@ -153,7 +264,7 @@ void Input(){
             break;
         case 80 : dir = DOWN;
             break;
-        case 'x' : gameOver = true;
+        case 'x' : gameOver1 = 1;
             break;
         default :
             break;
@@ -163,20 +274,21 @@ void Input(){
 
 }
 
-/* void fruitnum(){
-
-    while(w<2){
-        for(int i=0;i<6;i++){
-            if(NumberY[i] == locationY && NumberX[i] == locationX){
-                a[w]=number[i];
-                w++;
-            }
-        }
-    } 
-} */
-
 void Logic(){
-    switch (dir){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height){
+        cout << "\n";
+        SetConsoleTextAttribute(hConsole, 78);
+        cout << "\t____________________\n";
+        cout << "\t                    \n";
+        cout << "\t      You lose      \n";
+        cout << "\t                    \n";
+        cout << "\t____________________\n";
+        SetConsoleTextAttribute(hConsole, 7);
+        //cout << "  \n";
+        gameOver1 = true;
+    }else{
+        switch (dir){
     case LEFT : locationX--;
         break;
     case RIGHT : locationX++;
@@ -185,40 +297,56 @@ void Logic(){
         break;
     case DOWN : locationY++;
         break;
+        }
     }
-
-    if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height)
-        gameOver = true;
-
+    
     bool foundNum = false;
     for(int i=0;i<6;i++){
         //for (int k = 0; k < nums.size(); k++){
-            if (NumberY[i] == locationY && NumberX[i] == locationX){
+        if (NumberY[i] == locationY && NumberX[i] == locationX){
     
                 a[w]=number[i];
                 w++;
-                //foundNum = true;
+                //foundNum = true; 
             }
         //}
     }   
 }
 
 void checkAns(int num){
-    if(a[0]==0 || a[1]==0){
-        gameOver = false;
-    }else if(a[0]!=0 && a[1]!=0){
-        if(a[0]+a[1]==num){
-            cout << "You win";
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(a[0]!=0 && a[1]!=0){
+        if(a[0]+a[1]==num){ 
+            cout << "\n";
+            SetConsoleTextAttribute(hConsole, 100);
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You win       \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
+            SetConsoleTextAttribute(hConsole, 7);
+            //cout << "  \n";
             level+=1;
+            gameWin = true;
         }else{
-            cout << "You lose";    
+            cout << "\n";
+            SetConsoleTextAttribute(hConsole, 78);
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You lose      \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
+            SetConsoleTextAttribute(hConsole, 7);
+            //cout << "  \n";
+            gameOver1 = true;    
         }
-        Sleep(1500);
-        gameOver = true;
+        Sleep(3000);
+        
     } 
 }
 
-int playsnake(){
+int playsnake(int lvl){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     vector<int> number = {1, 2, 3};
     // Seed the random number generator with the current time
     srand(time(0));
@@ -230,17 +358,24 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        rand_number(num);
+        rand_number(num,lvl);
 
-    while (!gameOver){
-        cout << a[0] << " " << a[1] << a[0]+a[1];
-        Draw(num);
+    while (true){
+        Draw(num,lvl);
         Input();
         Logic();
         checkAns(num);
-        Sleep(20);
-    
+        if(gameWin){
+            SetConsoleTextAttribute(hConsole, 7);
+            Sleep(1500);
+            system("cls");
+            return 1;
+        }else if(gameOver1){
+            SetConsoleTextAttribute(hConsole, 7);
+            Sleep(1500);
+            system("cls");
+            return 0;
+        }
+        Sleep(30);
     }
-
-    return 1;
 }
