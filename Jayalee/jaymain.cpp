@@ -1,5 +1,6 @@
 #include "jay.h"
 
 int main(){
-    playsnake(5);
+    for(int i =0 ;i<3;i++)
+    {playsnake(5);}
 }
