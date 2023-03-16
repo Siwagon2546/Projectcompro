@@ -1,5 +1,5 @@
 #include "jay.h"
 
 int main(){
-    playsnake();
+    playsnake(5);
 }
