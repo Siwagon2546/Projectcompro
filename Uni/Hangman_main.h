@@ -192,7 +192,7 @@ int HangManPlay(int lv){
 			SetConsoleTextAttribute(Text_Color,15);
 		
 		if( found == wordLength ){
-			SetConsoleTextAttribute(Text_Color,1);
+			SetConsoleTextAttribute(Text_Color,2);
 			cout << endl;
 			cout << "\t   ******************" << endl;
 			cout << "\t   *     You Win    *" << endl;
@@ -328,7 +328,7 @@ int HangManPlay(int lv){
 			cout << "\t   ******************" << endl;
 
 			SetConsoleTextAttribute(Text_Color,15);
-			cout << "\t    Answer : " << word << endl;
+			cout << "\t  Answer : " << word << endl;
 			Sleep(1500);
 
 			return 0;
