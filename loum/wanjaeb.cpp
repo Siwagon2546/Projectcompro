@@ -1,5 +1,7 @@
 #include "Hangman_main.h"      
 #include "fluidsortingheader.h"
+#include "mazeheader.h"
+#include "jay.h"
 
 #include <fstream>
 #include <string>
@@ -271,9 +273,7 @@ void PLAY::createuser(){
 }
 }
 
-
-
-void PLAY::scoreboard(){ //ต้องทำให้เรียงมากไปน้อย
+void PLAY::scoreboard(){
     vector<int> sortscore;
     for(int i=0;i<scorevector.size();i+=1){
         sortscore.push_back(scorevector[i]);
@@ -339,6 +339,9 @@ void PLAY::startmenu(){
     cout << "\t[/]"<< " ScoreBoard" << endl;
     cout << "\t[Esc]"<< " EXIT AND SAVE" << endl;
     //cout << "\t" << FSlvl << endl;
+    //cout << "\t" << HMlvl << endl;
+    //cout << "\t" << SNlvl << endl;
+    //cout << "\t" << MZlVl << endl;
 
     int input;
     do{
@@ -366,16 +369,16 @@ void PLAY::startmenu(){
             scorevector[select-1]+=playFluidsort(FSlvl);
             break;
         case 50:
-            //startselect = 2;
+            scorevector[select-1]+=mazeplay(MZlVl);
             break;
         case 51:
-            //startselect = 3;
+            scorevector[select-1]+=HangManPlay(HMlvl);
             break;
         case 52:
-            //startselect = 4;
+            //scorevector[select-1]+=
             break;
         case 53:
-            //startselect = 5;
+            scorevector[select-1]+=playsnake(SNlvl);
             break;
     }
     }while(input <47 || input>53);
@@ -383,6 +386,7 @@ void PLAY::startmenu(){
 }
 
 void PLAY::leveled(){
+    MZlVl = (scorevector[select-1]/20)+1;
     if(scorevector[select-1] <2){
         FSlvl = 1;
     }else if(scorevector[select-1] < 5){
@@ -407,6 +411,32 @@ void PLAY::leveled(){
         FSlvl = 11;
     }else FSlvl = 12;
 
+    if(scorevector[select-1] < 2){
+        HMlvl = 1;
+    }else if(scorevector[select-1] < 5){
+        HMlvl = 2;
+    }else if(scorevector[select-1] < 10){
+        HMlvl = 3;
+    }else if(scorevector[select-1] < 30){
+        HMlvl = 4;
+    }else if(scorevector[select-1] >= 30 && scorevector[select-1] < 40){
+        HMlvl = 5;
+    }else if(scorevector[select-1] >= 40){
+        HMlvl = 6;
+    }
+
+    if(scorevector[select-1] < 5){
+        SNlvl = 1;
+    }else if(scorevector[select-1] < 10){
+        SNlvl = 2;
+    }else if(scorevector[select-1] < 15){ 
+        SNlvl = 3;
+    }else if(scorevector[select-1] < 20){
+        SNlvl = 4;
+    }else SNlvl = 5;
+    
+
+
 
 }
 
@@ -426,7 +456,6 @@ while(play.playable){
     play.startmenu();
     play.scoreboard();
 }
-}
-    
+}   
 }
 
