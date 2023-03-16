@@ -14,19 +14,35 @@ using namespace std;
 
 void HangManCreate(int tries){
 
+	HANDLE Text_Color = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	cout << endl;
+	SetConsoleTextAttribute(Text_Color,145);
+	for(int i = 0; i < 50;i++){
+		cout << "-";
+ 	}
+	SetConsoleTextAttribute(Text_Color,15);
+
     cout << endl << endl;
-    cout << "\t   -----" << endl;
-    cout << "\t   |   |" << endl;
-    cout << "\t   |"; if(tries >= 1) cout << "\t   O   "; cout << endl;
-    cout << "\t   |"; if(tries >= 2) cout << "\t  /"; 
-                    if(tries >= 3) cout << "\t|";
-                    if(tries >= 4) cout << "\t\\"; cout << endl;
-    cout << "\t   |"; if(tries >= 5) cout << "\t  /";
-                    if(tries >= 6) cout << "\t \\"; cout << endl;
-    cout << "\t   |" << endl;
-    cout << "\t  _|_" << endl;
-	cout << "\t    " << endl;
-	cout << "\t     " << endl;
+    cout << "\t\t    -----" << endl;
+    cout << "\t\t    |   |" << endl;
+    cout << "\t\t    |"; if(tries >= 1) cout << "   O   "; cout << endl;
+    cout << "\t\t    |"; if(tries >= 2) cout << "  /"; 
+                    if(tries >= 3) cout << "|";
+                    if(tries >= 4) cout << "\\"; cout << endl;
+    cout << "\t\t    |"; if(tries >= 5) cout << "  /";
+                    if(tries >= 6) cout << " \\"; cout << endl;
+    cout << "\t\t    |" << endl;
+    cout << "\t\t   _|_" << endl;
+	cout << "\t\t    " << endl;
+	cout << "\t\t     " << endl;
+
+	SetConsoleTextAttribute(Text_Color,145);
+ 	for(int i = 0; i < 50;i++){
+		cout << "-";
+ 	}
+	SetConsoleTextAttribute(Text_Color,15);
+	cout << endl << endl;
 }
 
 void importWord(int lv, vector<string> &x){  //x = word lmao
@@ -134,7 +150,6 @@ int HangManPlay(int lv){
 
 	HANDLE Text_Color = GetStdHandle(STD_OUTPUT_HANDLE); // Set for text-color //
 		SetConsoleTextAttribute(Text_Color,15);
-
 	vector<string> wordList;
 	string word;
 	string guessed;
@@ -151,7 +166,6 @@ int HangManPlay(int lv){
 	string dispWord (wordLength, '_');
 	
 	int found = 0;
-	int i = 0;
 	char guess = ' ';
 	int tries = 0;
 	int flagFound = 0;
@@ -162,32 +176,31 @@ int HangManPlay(int lv){
 
 		system("cls");
 
-		cout << "\tLevel : " << lv << endl;
-		cout << "Guess The Word: " << endl << endl;
+		cout << "\t\tLevel : " << lv << endl << endl;
+		cout << "Guess The Word : " ;
 		 
 		for(int i = 0; i < wordLength; i++)
 			cout << " " << dispWord[i] << " "; 
-		cout << endl << endl << endl;
+		cout << endl << endl;
 		 	
 			SetConsoleTextAttribute(Text_Color,4);
-		cout << "Wrong Attempts: " << tries << " / " << WRONGTRIES << endl;
+		cout << "\tWrong Attempts : " << tries << " / " << WRONGTRIES << endl;
 			SetConsoleTextAttribute(Text_Color,15);
-		cout << "Guessed Letters: " << guessed << endl; 
+		cout << "\tGuessed Letters : " << guessed << endl; 
 
-			SetConsoleTextAttribute(Text_Color,1);
 		HangManCreate(tries);
 			SetConsoleTextAttribute(Text_Color,15);
 		
 		if( found == wordLength ){
 			SetConsoleTextAttribute(Text_Color,1);
 			cout << endl;
-			cout << "******************" << endl;
-			cout << "*     You Win    *" << endl;
-			cout << "* Bro So Good XD *" << endl;
-			cout << "******************" << endl;
+			cout << "\t   ******************" << endl;
+			cout << "\t   *     You Win    *" << endl;
+			cout << "\t   * Bro So Good XD *" << endl;
+			cout << "\t   ******************" << endl;
 
 			SetConsoleTextAttribute(Text_Color,15);
-			cout << " Answer : " << word << endl;
+			cout << "\t    Answer : " << word << endl;
 			Sleep(1500);
 
 			return 1;
@@ -197,8 +210,8 @@ int HangManPlay(int lv){
 		if(tries == 6) break; 
 
 		if(lv > 3){
-			cout << "It's to hard for you.We shall give you a hint." << endl;
-			cout << "Press 1 to optain hint." << endl;
+			cout << "It's too hard for you. We shall give you a hint." << endl;
+			cout << "Press 1 to optain hint." << endl << endl;
 
 
 			if(wordLength < 6) cout << "You have " << number - 2 << " hint." << endl << endl;
@@ -215,31 +228,59 @@ int HangManPlay(int lv){
 		flagFound = 0;
 
 			if(wordLength < 6){
-				if(guess == 49 && found == 0){
-					dispWord[0] = word[0];
-					found++;
+				if(guess == 49 && number != 0){
+					int randnum = rand()%wordLength;
+					while(word[randnum] == dispWord[randnum]){
+						randnum = rand()%wordLength;
+					}
+
+					for(int i=0; i<wordLength; i++){
+						if( word[i]==word[randnum] && dispWord[i]=='_' ){
+							dispWord[i] = word[randnum];
+							found++;
+							flagFound = 1; 
+						}
+					}		
+
 					number--;
-					flagFound = 1;
 				}
 			}
 
 			if(wordLength >= 6 && wordLength < 8){
-				if(guess == 49 && found < 2){
-					dispWord[i] = word[i];
-					found++;
-					flagFound = 1;
+				if(guess == 49 && number != 0){
+					int randnum = rand()%wordLength;
+					while(word[randnum] == dispWord[randnum]){
+						randnum = rand()%wordLength;
+					}
+
+					for(int i=0; i<wordLength; i++){
+						if( word[i]==word[randnum] && dispWord[i]=='_' ){
+							dispWord[i] = word[randnum];
+							found++;
+							flagFound = 1; 
+						}
+					}
+
 					number--;
-					i++;
 				}
 			}
 
 			if(wordLength >= 8){
-				if(guess == 49 && found < 3){
-					dispWord[i] = word[i];
-					found++;
-					flagFound = 1;
+				if(guess == 49 && number != 0){
+					int randnum = rand()%wordLength;
+					while(word[randnum] == dispWord[randnum]){
+						randnum = rand()%wordLength;
+					}
+
+					for(int i=0; i<wordLength; i++){
+						if( word[i]==word[randnum] && dispWord[i]=='_' ){
+							dispWord[i] = word[randnum];
+							found++;
+							flagFound = 1; 
+						}
+					}
+
 					number--;
-					i++;
 				}
 			}
 
@@ -278,19 +319,24 @@ int HangManPlay(int lv){
     	}
 
 		if( found != wordLength ){
+
 			SetConsoleTextAttribute(Text_Color,4);
 			cout << endl;
-			cout << "******************" << endl;
-			cout << "*    You Lose    *" << endl;
-			cout << "* GGEZ Noob Shit *" << endl;
-			cout << "******************" << endl;
+			cout << "\t   ******************" << endl;
+			cout << "\t   *    You Lose    *" << endl;
+			cout << "\t   * GGEZ Noob Shit *" << endl;
+			cout << "\t   ******************" << endl;
 
 			SetConsoleTextAttribute(Text_Color,15);
-			cout << " Answer : " << word << endl;
+			cout << "\t    Answer : " << word << endl;
 			Sleep(1500);
 
 			return 0;
 		}
+
+		return 0;
 	}
 }
+
+
 
