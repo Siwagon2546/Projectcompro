@@ -381,7 +381,7 @@ int playsnake(int lvl){
             system("cls");
             return 0;
         }else if(x.gameExit){
-            SetConsoleTextAttribute(hConsole, 78);
+            SetConsoleTextAttribute(hConsole, 240);
             cout << "\t____________________\n";
             cout << "\t                    \n";
             cout << "\t      You exit      \n";
