@@ -115,6 +115,7 @@ void playPuzzle(int size)
         string inp;
         cout << "Enter tile to move (Type EXIT to exit): ";
         cin >> inp;
+        
 
         if(inp == "EXIT"){
             return;
