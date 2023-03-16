@@ -13,10 +13,11 @@ const int height = 20;
 
 
 class eatnum{
-int locationX=1, locationY=1;
+int locationX = 1, locationY = 1;
 public:
-bool gameWin=false;
-bool gameOver1=false;
+bool gameWin = false;
+bool gameOver1 = false;
+bool gameExit = false;
 int NumberX[6];
 int NumberY[6];
 int k=0;
@@ -275,7 +276,7 @@ void eatnum::Input(){
             break;
         case 80 : dir = DOWN;
             break;
-        case 'x' : gameOver1 = 1;
+        case 'x' : gameExit = true;
             break;
         default :
             break;
@@ -344,8 +345,8 @@ int playsnake(int lvl){
     srand(time(0));
     //For random number
     int num = rand()%5+6;
-    // Generate a random number between 0 and 5
-    int rand_num = rand() % 6;
+    // Generate a random number between 1 and 6
+    int rand_num = rand()%5+1;
     // Randomize the position of the random number in the vector
     random_shuffle(number.begin(), number.end());
 
@@ -373,6 +374,17 @@ int playsnake(int lvl){
             cout << "\t____________________\n";
             cout << "\t                    \n";
             cout << "\t      You lose      \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
+            SetConsoleTextAttribute(hConsole, 7);
+            Sleep(1500);
+            system("cls");
+            return 0;
+        }else if(x.gameExit){
+            SetConsoleTextAttribute(hConsole, 240);
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You exit      \n";
             cout << "\t                    \n";
             cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);

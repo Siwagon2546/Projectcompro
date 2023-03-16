@@ -6,7 +6,7 @@
 #include <random>
 
 using namespace std;
-
+ 
 class maze{
     public:
     char input;
@@ -179,9 +179,14 @@ void maze::wincheck(){
 
 int mazeplay(int k){
     maze x;
-    int o;
-    x.h=10*k-1;
-    x.w=30*k-1;
+
+    if(k<10){
+        x.h=2*k-1;
+        x.w=4*k-1;
+    }else{
+        x.h=10;
+        x.w=30;
+    }
 
     x.maze=x.generateMaze();
     

@@ -360,7 +360,7 @@ void PLAY::startmenu(){
     cout << "      WAAN JAEB ARCADE GAME" << endl ;
     cout << "\t[1]"<< " FluidSort" << endl ;
     cout << "\t[2]"<< " Maze" << endl ;
-    cout << "\t[3]"<< " Hangman" << endl ;
+    cout << "\t[3]"<< " Hangman(IF YOU DARE :D)" << endl ;
     cout << "\t[4]"<< " NumberSort" << endl ;
     cout << "\t[5]"<< " Eating" << endl << endl;
     cout << "\t[0]"<< " Select Username" << endl;
