@@ -21,7 +21,7 @@ int k=0;
 int w=0;
 int number[6];
 int a[3];
-int level=1;
+int level;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -189,7 +189,7 @@ void Setup(){
     GenerateLocation();
 }
 
-void Draw(int num){
+void Draw(int num,int level){
     system("cls");
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -345,7 +345,7 @@ void checkAns(int num){
     } 
 }
 
-int playsnake(){
+int playsnake(int lvl){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     vector<int> number = {1, 2, 3};
     // Seed the random number generator with the current time
@@ -358,25 +358,24 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        rand_number(num,level);
+        rand_number(num,lvl);
 
     while (true){
-        Draw(num);
+        Draw(num,lvl);
         Input();
         Logic();
         checkAns(num);
         if(gameWin){
             SetConsoleTextAttribute(hConsole, 7);
-            Sleep(5000);
-            break;
+            Sleep(1500);
+            system("cls");
+            return 1;
         }else if(gameOver1){
             SetConsoleTextAttribute(hConsole, 7);
-            Sleep(5000);
-            break;
+            Sleep(1500);
+            system("cls");
+            return 0;
         }
         Sleep(30);
     }
-
-
-    return 1;
 }
