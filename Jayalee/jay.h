@@ -344,8 +344,8 @@ int playsnake(int lvl){
     srand(time(0));
     //For random number
     int num = rand()%5+6;
-    // Generate a random number between 0 and 5
-    int rand_num = rand() % 6;
+    // Generate a random number between 1 and 6
+    int rand_num = rand()%5+1;
     // Randomize the position of the random number in the vector
     random_shuffle(number.begin(), number.end());
 
