@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <algorithm>
- 
+
 using namespace std;
  
 const int width = 40;
