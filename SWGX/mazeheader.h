@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>   // WinApi header
 #include <vector>
 #include <algorithm> //shuffle
 #include <conio.h>
@@ -128,17 +129,25 @@ vector<vector<int>> maze::generateMaze() {
 }
 
 void maze::drawMaze() {
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     goalRow = h - 2;
     goalCol = w - 2;
     for (int row = 0; row < h; row++) {
         for (int col = 0; col < w; col++) {
             if (row == playerRow && col == playerCol) {
-                cout << "P"; // draw the player
+                SetConsoleTextAttribute(hConsole, 192);
+                cout << " "; // draw the player
+                SetConsoleTextAttribute(hConsole, 15);
             } else if (row == h-2 && col == w-2) {
-                cout << "G"; // draw the goal
+                SetConsoleTextAttribute(hConsole, 96);
+                cout << " "; // draw the goal
+                SetConsoleTextAttribute(hConsole, 15);
             } else {
                 if(maze[row][col]==1){
-                    cout<<"@";
+                    SetConsoleTextAttribute(hConsole, 160);
+                    cout<<" ";
+                    SetConsoleTextAttribute(hConsole, 15);
                 }else{
                     cout<<" ";
                 }
@@ -172,7 +181,7 @@ int mazeplay(int k){
     maze x;
     int o;
     x.h=10*k-1;
-    x.w=10*k-1;
+    x.w=30*k-1;
 
     x.maze=x.generateMaze();
     
