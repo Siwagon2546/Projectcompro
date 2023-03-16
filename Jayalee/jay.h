@@ -21,7 +21,7 @@ int k=0;
 int w=0;
 int number[6];
 int a[3];
-int level=1;
+int level;
 
 enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
@@ -189,21 +189,21 @@ void Setup(){
     GenerateLocation();
 }
 
-void Draw(int num){
+void Draw(int num,int level){
     system("cls");
 
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     SetConsoleTextAttribute(hConsole, 10);
-    cout << "             SMART Snake Game   \n";
+    cout << "\t             SMART Snake Game   \n";
     SetConsoleTextAttribute(hConsole, 7);
-    cout << "                Number is " <<    num   << "\n";
+    cout << "\t                Number is " <<    num   << "\n";
     SetConsoleTextAttribute(hConsole, 12);
-    cout << "^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
+    cout << "\t^ UP , v down , < LEFT , > RIGHT ,  x to EXIT\n";
     SetConsoleTextAttribute(hConsole, 9);
-    cout << "_" << a[0] << "_ + _" << a[2] << "_ " << " = " <<num << "\n";
+    cout << "\t_" << a[0] << "_ + _" << a[2] << "_ " << " = " <<num << "\n";
     SetConsoleTextAttribute(hConsole, 2);
-    cout << "               Level " << level << "\n";
+    cout << "\t               Level " << level << "\n";
 
     string text[height] ;
     for(int i=0;i<height;i++){
@@ -242,7 +242,7 @@ void Draw(int num){
     }
 
     for(int i=0;i<height;i++){
-                cout << text[i]<<endl;
+                cout << "\t"<<text[i]<<endl;
                 //SetConsoleTextAttribute(hConsole, 7);
             }
     SetConsoleTextAttribute(hConsole, 7);
@@ -279,11 +279,11 @@ void Logic(){
     if (locationX <= 0 || locationX >= width || locationY <= 0 || locationY >= height){
         cout << "\n";
         SetConsoleTextAttribute(hConsole, 78);
-        cout << "____________________\n";
-        cout << "                    \n";
-        cout << "      You lose      \n";
-        cout << "                    \n";
-        cout << "____________________\n";
+        cout << "\t____________________\n";
+        cout << "\t                    \n";
+        cout << "\t      You lose      \n";
+        cout << "\t                    \n";
+        cout << "\t____________________\n";
         SetConsoleTextAttribute(hConsole, 7);
         //cout << "  \n";
         gameOver1 = true;
@@ -319,11 +319,11 @@ void checkAns(int num){
         if(a[0]+a[1]==num){ 
             cout << "\n";
             SetConsoleTextAttribute(hConsole, 100);
-            cout << "____________________\n";
-            cout << "                    \n";
-            cout << "      You win       \n";
-            cout << "                    \n";
-            cout << "____________________\n";
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You win       \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             level+=1;
@@ -331,11 +331,11 @@ void checkAns(int num){
         }else{
             cout << "\n";
             SetConsoleTextAttribute(hConsole, 78);
-            cout << "____________________\n";
-            cout << "                    \n";
-            cout << "      You lose      \n";
-            cout << "                    \n";
-            cout << "____________________\n";
+            cout << "\t____________________\n";
+            cout << "\t                    \n";
+            cout << "\t      You lose      \n";
+            cout << "\t                    \n";
+            cout << "\t____________________\n";
             SetConsoleTextAttribute(hConsole, 7);
             //cout << "  \n";
             gameOver1 = true;    
@@ -345,7 +345,7 @@ void checkAns(int num){
     } 
 }
 
-int playsnake(){
+int playsnake(int lvl){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     vector<int> number = {1, 2, 3};
     // Seed the random number generator with the current time
@@ -358,25 +358,24 @@ int playsnake(){
     random_shuffle(number.begin(), number.end());
 
         GenerateLocation();
-        rand_number(num,level);
+        rand_number(num,lvl);
 
     while (true){
-        Draw(num);
+        Draw(num,lvl);
         Input();
         Logic();
         checkAns(num);
         if(gameWin){
             SetConsoleTextAttribute(hConsole, 7);
-            Sleep(5000);
-            break;
+            Sleep(1500);
+            system("cls");
+            return 1;
         }else if(gameOver1){
             SetConsoleTextAttribute(hConsole, 7);
-            Sleep(5000);
-            break;
+            Sleep(1500);
+            system("cls");
+            return 0;
         }
         Sleep(30);
     }
-
-
-    return 1;
 }
