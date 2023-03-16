@@ -1,5 +1,7 @@
 #include "Hangman_main.h"      
 #include "fluidsortingheader.h"
+#include "mazeheader.h"
+#include "jay.h"
 
 #include <fstream>
 #include <string>
@@ -12,7 +14,7 @@ class PLAY{
     string name;
     bool playable = false; 
     int score;
-    int startselect;
+    bool SBviwe = false;
     vector<int> scorevector;
     vector<string> namevector;
     int FSlvl;
@@ -26,7 +28,7 @@ class PLAY{
     void userselect();
     void createuser();
     void startmenu();
-    //void scoreboard();
+    void scoreboard();
     void leveled();
     //ใส่สี
     //เพิ่มเกม
@@ -271,19 +273,55 @@ void PLAY::createuser(){
 }
 }
 
-
-
-/*void PLAY::scoreboard(){ //ต้องทำให้เรียงมากไปน้อย
-    char sname[100];
-    int sscore;
-    string text;
-    FileSave.open(filesavename);
-    for(int i=0;getline(FileSave,text);i+=1){
-        sscanf(text.c_str(),"%[^:]:%d",sname,&sscore);
-        cout << "\t" << "-" << i+1 << "- " << sname << "      "<< sscore << endl;
+void PLAY::scoreboard(){
+    vector<int> sortscore;
+    for(int i=0;i<scorevector.size();i+=1){
+        sortscore.push_back(scorevector[i]);
     }
-    FileSave.close();
-}*/
+    
+    vector<int> sortpos;
+    int max ;
+    int maxpos;
+    for(int k=0;k<sortscore.size();k+=1){
+        max = 0;
+        maxpos =0;
+    for(int i=0;i<sortscore.size();i+=1){
+        if(max <= sortscore[i]){
+            max = sortscore[i];
+            maxpos = i;
+        }
+    }
+    sortscore[maxpos] = -10;
+    sortpos.push_back(maxpos);
+    /* for(int h=0;h<scorevector.size();h+=1){
+        cout << sortscore[h] << " " ;
+    } */
+    //cout << endl;
+    }
+    
+    
+    /*  for(int i=0;i<sortpos.size();i+=1){
+        cout << sortpos[i] << " " ;
+    }  */
+    int input;
+    if(SBviwe == true){
+    do{
+    system("cls");
+    cout << "      ScoreBoard" << endl;
+    
+    for(int i=0;i<sortpos.size();i+=1){
+        cout << "\t-" << i+1 << "- " << namevector[sortpos[i]] << setw(20) << "\t"<< scorevector[sortpos[i]] << endl;
+    }
+    cout << endl << "\t[ESC] back";
+
+    input = getch();
+    }while(input !=27);
+    SBviwe = false;
+    }
+    
+    
+
+}
 
 void PLAY::startmenu(){
     system("cls");
@@ -301,6 +339,9 @@ void PLAY::startmenu(){
     cout << "\t[/]"<< " ScoreBoard" << endl;
     cout << "\t[Esc]"<< " EXIT AND SAVE" << endl;
     //cout << "\t" << FSlvl << endl;
+    //cout << "\t" << HMlvl << endl;
+    //cout << "\t" << SNlvl << endl;
+    //cout << "\t" << MZlVl << endl;
 
     int input;
     do{
@@ -319,7 +360,7 @@ void PLAY::startmenu(){
             exit(0);
             break;
         case 47:
-            startselect = 7;
+            SBviwe = true;
             break;
         case 48:
             playable = false;
@@ -328,16 +369,16 @@ void PLAY::startmenu(){
             scorevector[select-1]+=playFluidsort(FSlvl);
             break;
         case 50:
-            startselect = 2;
+            scorevector[select-1]+=mazeplay(MZlVl);
             break;
         case 51:
-            startselect = 3;
+            scorevector[select-1]+=HangManPlay(HMlvl);
             break;
         case 52:
-            startselect = 4;
+            //scorevector[select-1]+=
             break;
         case 53:
-            startselect = 5;
+            scorevector[select-1]+=playsnake(SNlvl);
             break;
     }
     }while(input <47 || input>53);
@@ -345,6 +386,7 @@ void PLAY::startmenu(){
 }
 
 void PLAY::leveled(){
+    MZlVl = (scorevector[select-1]/20)+1;
     if(scorevector[select-1] <2){
         FSlvl = 1;
     }else if(scorevector[select-1] < 5){
@@ -369,6 +411,33 @@ void PLAY::leveled(){
         FSlvl = 11;
     }else FSlvl = 12;
 
+    if(scorevector[select-1] < 2){
+        HMlvl = 1;
+    }else if(scorevector[select-1] < 5){
+        HMlvl = 2;
+    }else if(scorevector[select-1] < 10){
+        HMlvl = 3;
+    }else if(scorevector[select-1] < 30){
+        HMlvl = 4;
+    }else if(scorevector[select-1] >= 30 && scorevector[select-1] < 40){
+        HMlvl = 5;
+    }else if(scorevector[select-1] >= 40){
+        HMlvl = 6;
+    }
+
+    if(scorevector[select-1] < 5){
+        SNlvl = 1;
+    }else if(scorevector[select-1] < 10){
+        SNlvl = 2;
+    }else if(scorevector[select-1] < 15){ 
+        SNlvl = 3;
+    }else if(scorevector[select-1] < 20){
+        SNlvl = 4;
+    }else SNlvl = 5;
+    
+
+
+
 }
 
 int main(){
@@ -385,7 +454,8 @@ while(!play.playable){
 while(play.playable){
     play.leveled();
     play.startmenu();
+    play.scoreboard();
 }
-}
+}   
 }
 
