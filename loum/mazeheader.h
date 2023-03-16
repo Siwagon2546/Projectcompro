@@ -6,7 +6,7 @@
 #include <random>
 
 using namespace std;
-
+ 
 class maze{
     public:
     char input;
