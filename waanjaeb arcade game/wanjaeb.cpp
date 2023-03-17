@@ -1,0 +1,546 @@
+#include "Hangman_main.h"      
+#include "fluidsortingheader.h"
+#include "mazeheader.h"
+#include "jay.h"
+#include "15pzgame.h"
+
+#include <fstream>
+#include <string>
+
+class PLAY{
+    public:
+    string filesavename = "waanjaeb.txt";
+    int select;
+    bool nouser = true;
+    string name;
+    bool playable = false; 
+    int score;
+    bool SBviwe = false;
+    vector<int> scorevector;
+    vector<string> namevector;
+    int FSlvl;
+    int MZlVl;
+    int HMlvl;
+    int SNlvl;
+    int NPlvl;
+
+    void fileread();
+    void gamestart();
+    void userselect();
+    void createuser();
+    void startmenu();
+    void scoreboard();
+    void leveled();
+    //ใส่สี
+    //fs
+    //15
+    //mz lvled
+    //sn
+    //hm add
+};
+
+fstream FileSave;
+
+void PLAY::fileread(){
+    namevector.clear();
+    scorevector.clear();
+    FileSave.open(filesavename);
+    string text;
+    char name[100];
+    int score;
+    for(int i=0;getline(FileSave,text);i+=1){
+        if(text !=""){
+        sscanf(text.c_str(),"%[^:]:%d",name,&score);
+        scorevector.push_back(score);
+        namevector.push_back(name);
+        nouser = false;
+        }
+    } 
+    FileSave.close();
+    /*for(int i=0;i<scorevector.size();i+=1){
+        cout << scorevector[i] << " " << namevector[i] << endl;
+    }*/
+}
+
+void PLAY::gamestart(){
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 9);
+    cout << endl << endl << "WAAN JAEB ARCADE GAME";
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << endl << endl << endl << endl << "Press any key to continue";
+    SetConsoleTextAttribute(hConsole, 15);
+    getch();
+}
+
+void PLAY::userselect(){
+    system("cls");
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 9);
+    cout << "      Please select user"<< endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    if(nouser !=true){
+    for(int i=0;i<namevector.size();i+=1){
+        cout << "\t[" << i+1 << "] " << namevector[i] << endl; 
+        //cout << namevector.size();
+        
+    }}//else{cout << "\t   Please create new user";}
+    
+    cout << endl;
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << "\t" << "[0]" << " Create new user" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    SetConsoleTextAttribute(hConsole, 14);
+    cout << "\t" << "[/]" << " Delete user" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    //cout << "\t" << "[ESC]" << " EXIT" << endl ;
+    //cout << usercount;
+    int input;
+    do{
+    input = getch();
+    switch(input){
+        /*case 27:
+            system("cls");
+        cout << endl << endl <<"\tEXIT" ;
+        Sleep(1500);
+        system("cls");
+        exit(0);
+            break;*/
+        case '1':
+            select = 1;
+            playable = true;
+            break;
+        case '2':
+            select = 2;
+            playable = true;
+            break;
+        case '3':
+            select = 3;
+            playable = true;
+            break;
+        case '4':
+            select = 4;
+            playable = true;
+            break;
+        case '5':
+            select = 5;
+            playable = true;
+            break;
+        case '6':
+            select = 6;
+            playable = true;
+            break;
+        case '7':
+            select = 7;
+            playable = true;
+            break;
+        case '8':      
+            select = 8;
+            playable = true;
+            break;
+        case '9':
+            select = 9;
+            playable = true;
+            break;
+        case '0':
+            select = 0;
+            break;
+        case '/':
+            select = 1;
+            break;
+        default:
+            break;
+    }
+    }while((input <47 || input >57 )  ||  (select > namevector.size()));
+    if(input ==47){
+        select =-1;
+    }
+}
+
+void PLAY::createuser(){
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(select ==0 && namevector.size() <9){
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 1);
+    cout << "      Please enter your name" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    
+    string text;
+    vector<bool> creatable;
+    getline(cin,text);
+    //cout << text;
+    for(int i=0;i<namevector.size();i+=1){
+        if(text==namevector[i]){
+            creatable.push_back(false);
+            SetConsoleTextAttribute(hConsole, 12);
+            cout << "      cannot create " << text;
+            SetConsoleTextAttribute(hConsole, 15);
+            Sleep(1500);
+            break;
+        }else creatable.push_back(true);
+    }
+
+    bool creatable2=true;
+
+    for(int i=0;i<creatable.size();i+=1){
+        if(creatable[i] == false){
+            creatable2 = false;
+        }
+    }
+
+    if(creatable2){
+        namevector.push_back(text);
+        scorevector.push_back(0);
+        system("cls");
+        SetConsoleTextAttribute(hConsole, 10);
+        cout << "      " << text << " has been create";
+        SetConsoleTextAttribute(hConsole, 15);
+        //cout << namevector.size();
+        Sleep(1500);
+    }else if(select ==0 && namevector.size() >=9){
+        system("cls");
+        SetConsoleTextAttribute(hConsole, 12);
+        cout << "      cannot create ";
+        SetConsoleTextAttribute(hConsole, 15);
+        //cout << namevector.size();
+        Sleep(1500);
+    }
+    
+    FileSave.open(filesavename);
+    for(int i=0;i<namevector.size();i+=1){
+        FileSave << namevector[i] <<":"<<scorevector[i]<<endl;
+    }
+    FileSave.close();
+
+    }else if(select ==0 && namevector.size() >=9){
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 12);
+    cout << "      cannot create ";
+    SetConsoleTextAttribute(hConsole, 15);
+    Sleep(1500);
+    }
+
+    if(select == -1){       //delete
+        system("cls");
+        SetConsoleTextAttribute(hConsole, 12);
+        cout << "      Select to delete" << endl;
+        SetConsoleTextAttribute(hConsole, 15);
+        for(int i=0;i<namevector.size();i+=1){
+        cout << "\t[" << i+1 << "] " << namevector[i] << endl; 
+        }
+        SetConsoleTextAttribute(hConsole, 14);
+        cout << endl << "\t" << "[ESC]" << " BACK" << endl ;
+        SetConsoleTextAttribute(hConsole, 15);
+
+        int input;
+        bool loop = true;
+        int selectdel;
+    do{
+    input = getch();
+    switch(input){
+        case 27:
+            system("cls");
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << endl << endl <<"\tBACK" ;
+            SetConsoleTextAttribute(hConsole, 15);
+            Sleep(1500);
+            system("cls");
+            selectdel = 1;
+            loop = false;
+            break;
+        case '1':
+            selectdel = 1;
+            break;
+        case '2':
+            selectdel = 2;
+            break;
+        case '3':
+            selectdel = 3;
+            break;
+        case '4':
+            selectdel = 4;
+            break;
+        case '5':
+            selectdel = 5;
+            break;
+        case '6':
+            selectdel = 6;
+            break;
+        case '7':
+            selectdel = 7;
+            break;
+        case '8':      
+            selectdel = 8;
+            break;
+        case '9':
+            selectdel = 9;
+            break;
+        default:
+            break;
+    }
+    
+    if(input ==27){
+        loop= false;
+    }else loop = ((input <48 || input >57 )  ||  (selectdel > namevector.size()));
+    }while( loop );
+
+    if(input!=27){
+    int temp = namevector.size();
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 12);
+    cout << "      " << namevector[selectdel-1] << " has been delete";
+    SetConsoleTextAttribute(hConsole, 15);
+    Sleep(1500);
+    namevector.erase(namevector.begin()+selectdel-1);
+    scorevector.erase(scorevector.begin()+selectdel-1);
+    }
+
+    /*for(int i =0;i<namevector.size();i+=1){
+        cout << namevector[i] << endl;
+    }*/
+    //cout << namevector.size()<< "size";
+
+    FileSave.open(filesavename);
+    for(int i=0;i<namevector.size();i+=1){
+        FileSave << namevector[i] <<":"<<scorevector[i]<<endl;
+    }
+    for(int i=0;i<10;i+=1){
+        FileSave << "" << endl;
+    }
+    FileSave.close();
+    //cout << "asdsadasd";
+}
+}
+
+void PLAY::scoreboard(){
+    FileSave.open(filesavename);
+    for(int i=0;i<namevector.size();i+=1){
+        FileSave << namevector[i] <<":"<<scorevector[i]<<endl;
+    }
+    for(int i=0;i<10;i+=1){
+        FileSave << "" << endl;
+    }
+    FileSave.close();
+    vector<int> sortscore;
+    for(int i=0;i<scorevector.size();i+=1){
+        sortscore.push_back(scorevector[i]);
+    }
+    
+    vector<int> sortpos;
+    int max ;
+    int maxpos;
+    for(int k=0;k<sortscore.size();k+=1){
+        max = 0;
+        maxpos =0;
+    for(int i=0;i<sortscore.size();i+=1){
+        if(max <= sortscore[i]){
+            max = sortscore[i];
+            maxpos = i;
+        }
+    }
+    sortscore[maxpos] = -10;
+    sortpos.push_back(maxpos);
+    /* for(int h=0;h<scorevector.size();h+=1){
+        cout << sortscore[h] << " " ;
+    } */
+    //cout << endl;
+    }
+
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    
+    /*  for(int i=0;i<sortpos.size();i+=1){
+        cout << sortpos[i] << " " ;
+    }  */
+    int input;
+    if(SBviwe == true){
+    do{
+    system("cls");
+    SetConsoleTextAttribute(hConsole, 11);
+    cout << "      ScoreBoard" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    
+    for(int i=0;i<sortpos.size();i+=1){
+        if(select -1==sortpos[i]){SetConsoleTextAttribute(hConsole, 13);}
+        cout << "\t-" << i+1 << "- " << namevector[sortpos[i]] << setw(20) << "\t"<< scorevector[sortpos[i]] << endl;
+        SetConsoleTextAttribute(hConsole, 15);
+    }
+    SetConsoleTextAttribute(hConsole, 14);
+    cout << endl << "\t[ESC] back";
+    SetConsoleTextAttribute(hConsole, 15);
+
+    input = getch();
+    }while(input !=27);
+    SBviwe = false;
+    SetConsoleTextAttribute(hConsole, 11);
+    system("cls");
+    cout << endl << endl <<"\tBACK" ;
+    SetConsoleTextAttribute(hConsole, 15);
+    Sleep(1500);  
+    }
+    
+    
+
+}
+
+void PLAY::startmenu(){
+    system("cls");
+    name = namevector[select-1];
+    score = scorevector[select-1];
+
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 11);
+    cout << "ID : " ;
+    SetConsoleTextAttribute(hConsole, 15);
+    cout << name ;
+    SetConsoleTextAttribute(hConsole, 11);
+    cout << "      your score = ";
+    SetConsoleTextAttribute(hConsole, 15);
+    cout << score <<endl << endl;
+    SetConsoleTextAttribute(hConsole, 1);
+    cout << "      WAAN JAEB ARCADE GAME" << endl ;
+    SetConsoleTextAttribute(hConsole, 15);
+    cout << "\t[1]"<< " FluidSort" << endl ;
+    cout << "\t[2]"<< " Maze" << endl ;
+    cout << "\t[3]"<< " Hangman(IF YOU DARE :D)" << endl ;
+    cout << "\t[4]"<< " NumberSort" << endl ;
+    cout << "\t[5]"<< " Eating" << endl << endl;
+    SetConsoleTextAttribute(hConsole, 5);
+    cout << "\t[Esc]"<< " EXIT AND SAVE" << endl;
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << "\t[0]"<< " Select Username" << endl;
+    SetConsoleTextAttribute(hConsole, 14);
+    cout << "\t[/]"<< " ScoreBoard" << endl;
+    SetConsoleTextAttribute(hConsole, 15);
+    //cout << "\t" << FSlvl << endl;
+    //cout << "\t" << HMlvl << endl;
+    //cout << "\t" << SNlvl << endl;
+    //cout << "\t" << MZlVl << endl;
+
+    int input;
+    do{
+    input = getch();
+    switch(input){
+        case 27:
+            system("cls");
+            SetConsoleTextAttribute(hConsole, 11);
+            cout << endl << endl <<"\tEXIT AND SAVE" ;
+            SetConsoleTextAttribute(hConsole, 15);
+            Sleep(1500);
+            FileSave.open(filesavename);
+        for(int i=0;i<namevector.size();i+=1){
+            FileSave << namevector[i] <<":"<<scorevector[i]<<endl;
+        }
+        FileSave.close();
+            system("cls");
+            exit(0);
+            break;
+        case 47:
+            SBviwe = true;
+            break;
+        case 48:
+            playable = false;
+            break;
+        case 49:
+            scorevector[select-1]+=playFluidsort(FSlvl);
+            break;
+        case 50:
+            scorevector[select-1]+=mazeplay(MZlVl);
+            break;
+        case 51:
+            scorevector[select-1]+=HangManPlay(HMlvl);
+            break;
+        case 52:
+            scorevector[select-1]+=playPuzzle(NPlvl);
+            break;
+        case 53:
+            scorevector[select-1]+=playsnake(SNlvl);
+            break;
+    }
+    }while(input <47 || input>53);
+
+}
+
+void PLAY::leveled(){
+    MZlVl = (scorevector[select-1]/20)+1;
+
+    if(scorevector[select-1] <2){
+        FSlvl = 1;
+    }else if(scorevector[select-1] < 5){
+        FSlvl = 2;
+    }else if(scorevector[select-1] < 7){
+        FSlvl = 3;
+    }else if(scorevector[select-1] < 9){
+        FSlvl = 4;
+    }else if(scorevector[select-1] < 12){
+        FSlvl = 5;
+    }else if(scorevector[select-1] < 15){
+        FSlvl = 6;
+    }else if(scorevector[select-1] < 18){
+        FSlvl = 7;
+    }else if(scorevector[select-1] < 21){
+        FSlvl = 8;
+    }else if(scorevector[select-1] < 26){
+        FSlvl = 9;
+    }else if(scorevector[select-1] < 31){
+        FSlvl = 10;
+    }else if(scorevector[select-1] < 36){
+        FSlvl = 11;
+    }else FSlvl = 12;
+
+    if(scorevector[select-1] < 2){
+        HMlvl = 1;
+    }else if(scorevector[select-1] < 5){
+        HMlvl = 2;
+    }else if(scorevector[select-1] < 10){
+        HMlvl = 3;
+    }else if(scorevector[select-1] < 30){
+        HMlvl = 4;
+    }else if(scorevector[select-1] >= 30 && scorevector[select-1] < 40){
+        HMlvl = 5;
+    }else if(scorevector[select-1] >= 40){
+        HMlvl = 6;
+    }
+
+    if(scorevector[select-1] < 5){
+        SNlvl = 1;
+    }else if(scorevector[select-1] < 10){
+        SNlvl = 2;
+    }else if(scorevector[select-1] < 15){ 
+        SNlvl = 3;
+    }else if(scorevector[select-1] < 20){
+        SNlvl = 4;
+    }else SNlvl = 5;
+    
+    if(scorevector[select-1] < 10){
+        NPlvl = 4;
+    }else if(scorevector[select-1] < 20){
+        NPlvl = 6;
+    }else NPlvl = 8;
+
+
+}
+
+int main(){
+    PLAY play;
+
+    play.gamestart();
+
+while(true){
+while(!play.playable){
+    play.fileread();
+    play.userselect();
+    play.createuser();
+}
+while(play.playable){
+    play.leveled();
+    play.startmenu();
+    play.scoreboard();
+}
+}   
+}
+
